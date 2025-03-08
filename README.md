@@ -1,9 +1,13 @@
 # main_page
 Pagina de contacto
 
-Instalacion
+##Instalación
+
+```
 npm install
+```
+##Ejecutación
 
-Ejecutar
-
+```
 npm run dev
+```

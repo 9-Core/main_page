@@ -17,13 +17,15 @@
             v-bind="props"
             :elevation="isHovering ? 8 : 2"
             height="100%"
-            class="service-card"
+            class="service-card hover-effect"
+            :class="i % 2 === 0 ? 'orange-card' : 'green-card'"
           >
             <v-card-item>
               <v-icon
                 :icon="service.icon"
                 size="48"
-                class="service-icon mb-4"
+                :class="i % 2 === 0 ? 'orange-text' : 'green-text'"
+                class="mb-4"
               ></v-icon>
               <v-card-title class="text-h5 service-title">{{
                 service.title
@@ -32,7 +34,11 @@
                 service.description
               }}</v-card-text>
               <v-card-actions>
-                <v-btn variant="text" class="service-btn px-0">
+                <v-btn
+                  variant="text"
+                  class="service-btn px-0"
+                  :class="i % 2 === 0 ? 'orange-text' : 'green-text'"
+                >
                   Saber más
                   <v-icon end icon="mdi-arrow-right"></v-icon>
                 </v-btn>
@@ -87,32 +93,66 @@ const services = [
 <style scoped>
 /* Estilos específicos para la sección de servicios */
 .section-title {
-  color: #5db9f0 !important;
+  background: var(--gradient-full);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  font-weight: bold;
 }
 
 .section-subtitle {
-  color: white !important;
+  color: var(--text-light) !important;
 }
 
 .service-card {
-  border-top: 3px solid #5db9f0 !important;
-  background-color: rgba(5, 21, 40, 0.7) !important;
+  background-color: var(--surface-dark) !important;
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+}
+
+.orange-card::before {
+  background: var(--gradient-orange);
+}
+
+.green-card::before {
+  background: var(--gradient-green);
 }
 
 .service-title {
-  color: #5db9f0 !important;
+  color: var(--text-light) !important;
 }
 
 .service-text {
-  color: white !important;
+  color: var(--text-muted) !important;
 }
 
 .service-btn {
-  color: #5db9f0 !important;
+  font-weight: 500;
 }
 
-.service-icon {
-  color: #5db9f0 !important;
+.orange-text {
+  color: var(--orange-primary) !important;
+}
+
+.green-text {
+  color: var(--green-primary) !important;
+}
+
+.hover-effect {
+  transition: all 0.3s ease;
+}
+
+.hover-effect:hover {
+  transform: translateY(-10px);
 }
 </style>

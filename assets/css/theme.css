@@ -1,0 +1,110 @@
+/* Archivo de estilos globales - assets/css/theme.css */
+
+:root {
+  /* Colores primarios del logo */
+  --orange-primary: #ff7e00;
+  --orange-light: #ffb347;
+  --green-primary: #4caf50;
+  --green-light: #8bc34a;
+
+  /* Colores de fondo */
+  --background-dark: #121212;
+  --background-darker: #0a0a0a;
+  --surface-dark: #1e1e1e;
+
+  /* Colores de texto */
+  --text-light: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.7);
+
+  /* Gradientes */
+  --gradient-orange: linear-gradient(
+    135deg,
+    var(--orange-light),
+    var(--orange-primary)
+  );
+  --gradient-green: linear-gradient(
+    135deg,
+    var(--green-light),
+    var(--green-primary)
+  );
+  --gradient-full: linear-gradient(
+    135deg,
+    var(--orange-primary),
+    var(--orange-light),
+    var(--green-light),
+    var(--green-primary)
+  );
+}
+
+/* Estilos globales */
+html,
+body {
+  background-color: var(--background-dark) !important;
+  color: var(--text-light) !important;
+}
+
+.v-application {
+  background-color: var(--background-dark) !important;
+}
+
+.main-content {
+  background-color: var(--background-dark) !important;
+}
+
+/* Botones y elementos de acción */
+.primary-btn {
+  background: var(--gradient-orange) !important;
+  color: white !important;
+}
+
+.secondary-btn {
+  background: var(--gradient-green) !important;
+  color: white !important;
+}
+
+.accent-btn {
+  position: relative;
+  overflow: hidden;
+  background: var(--background-dark) !important;
+  border: 1px solid transparent !important;
+  border-image: var(--gradient-full) 1 !important;
+  color: white !important;
+}
+
+/* Títulos y encabezados */
+.section-title {
+  background: var(--gradient-full);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  font-weight: bold;
+}
+
+.section-subtitle {
+  color: var(--text-light) !important;
+}
+
+/* Tarjetas y elementos de contenido */
+.feature-card {
+  background-color: var(--surface-dark) !important;
+  border-top: 3px solid transparent;
+  border-image: var(--gradient-full) 1;
+  transition: all 0.3s ease;
+}
+
+/* Elementos de navegación */
+.nav-active::after {
+  background: var(--gradient-full) !important;
+}
+
+/* Footer */
+.footer {
+  background-color: var(--background-darker) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Efectos de hover y selección */
+.hover-effect:hover {
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  transform: translateY(-5px);
+}

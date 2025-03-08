@@ -23,13 +23,22 @@
           <v-card
             v-bind="props"
             :elevation="isHovering ? 8 : 2"
-            class="project-card h-100"
+            class="project-card"
           >
-            <v-img :src="project.image" height="200" cover></v-img>
+            <div class="project-image-container">
+              <v-img :src="project.image" height="200" cover></v-img>
+              <div
+                class="project-overlay"
+                :class="i % 2 === 0 ? 'orange-overlay' : 'green-overlay'"
+              ></div>
+            </div>
             <v-card-item>
-              <v-chip class="mb-3" color="#5db9f0" text-color="white">{{
-                project.category
-              }}</v-chip>
+              <v-chip
+                class="mb-3"
+                :color="i % 2 === 0 ? '#ff7e00' : '#4caf50'"
+                text-color="white"
+                >{{ project.category }}</v-chip
+              >
               <v-card-title class="text-h5 project-title mb-2">{{
                 project.title
               }}</v-card-title>
@@ -37,7 +46,11 @@
                 project.description
               }}</v-card-text>
               <v-card-actions class="mt-2">
-                <v-btn variant="text" class="project-btn px-0">
+                <v-btn
+                  variant="text"
+                  class="project-btn px-0"
+                  :class="i % 2 === 0 ? 'orange-text' : 'green-text'"
+                >
                   Ver detalles
                   <v-icon end icon="mdi-arrow-right"></v-icon>
                 </v-btn>
@@ -50,7 +63,7 @@
 
     <v-row class="mt-8">
       <v-col cols="12" class="text-center">
-        <v-btn color="#5db9f0" size="large" class="view-all-btn">
+        <v-btn class="gradient-btn">
           Ver todos los proyectos
           <v-icon end icon="mdi-arrow-right"></v-icon>
         </v-btn>
@@ -109,32 +122,100 @@ const projects = [
 <style scoped>
 /* Estilos específicos para la sección de proyectos */
 .section-title {
-  color: #5db9f0 !important;
+  background: linear-gradient(135deg, #ff7e00, #ffb347, #8bc34a, #4caf50);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  font-weight: bold;
 }
 
 .section-subtitle {
-  color: white !important;
+  color: #ffffff !important;
 }
 
 .project-card {
-  background-color: rgba(5, 21, 40, 0.7) !important;
+  background-color: #1e1e1e !important;
   transition: all 0.3s ease;
   height: 100%;
+  overflow: hidden;
+  border-radius: 8px;
+}
+
+.project-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5) !important;
+}
+
+.project-image-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.project-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.3;
+  transition: opacity 0.3s ease;
+}
+
+.orange-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 126, 0, 0.6),
+    rgba(255, 179, 71, 0.6)
+  );
+}
+
+.green-overlay {
+  background: linear-gradient(
+    135deg,
+    rgba(76, 175, 80, 0.6),
+    rgba(139, 195, 74, 0.6)
+  );
+}
+
+.project-card:hover .project-overlay {
+  opacity: 0.5;
 }
 
 .project-title {
-  color: #5db9f0 !important;
+  color: #ffffff !important;
+  transition: all 0.3s ease;
+}
+
+.project-card:hover .project-title {
+  background: linear-gradient(135deg, #ff7e00, #ffb347, #8bc34a, #4caf50);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
 }
 
 .project-text {
-  color: white !important;
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 
-.project-btn {
-  color: #5db9f0 !important;
+.orange-text {
+  color: #ff7e00 !important;
 }
 
-.view-all-btn {
+.green-text {
+  color: #4caf50 !important;
+}
+
+.gradient-btn {
+  background: linear-gradient(135deg, #ff7e00, #ffb347, #8bc34a, #4caf50);
   color: white !important;
+  padding: 0 24px;
+  height: 48px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.gradient-btn:hover {
+  box-shadow: 0 5px 15px rgba(255, 126, 0, 0.4);
+  transform: translateY(-3px);
 }
 </style>

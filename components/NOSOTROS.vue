@@ -36,7 +36,7 @@
                 <v-icon
                   :icon="value.icon"
                   size="36"
-                  color="#5db9f0"
+                  :class="i % 2 === 0 ? 'orange-text' : 'green-text'"
                   class="mb-2"
                 ></v-icon>
                 <div class="text-subtitle-1 font-weight-bold value-title">
@@ -46,7 +46,7 @@
             </v-col>
           </v-row>
 
-          <v-btn color="#5db9f0" size="large" class="about-btn">
+          <v-btn class="gradient-btn">
             Conoce al equipo
             <v-icon end icon="mdi-account-group"></v-icon>
           </v-btn>
@@ -59,17 +59,17 @@
           order-md="2"
           class="d-flex justify-center mb-8 mb-md-0"
         >
-          <v-img
-            src="/about-us-image.svg"
-            max-width="500"
-            class="about-image"
-          ></v-img>
+          <div class="logo-container">
+            <v-img src="/logo.png" max-width="400" class="about-logo"></v-img>
+            <div class="glow-effect orange-glow"></div>
+            <div class="glow-effect green-glow"></div>
+          </div>
         </v-col>
       </v-row>
 
       <v-row class="mt-16">
         <v-col cols="12">
-          <v-divider class="mb-16" color="rgba(93, 185, 240, 0.2)"></v-divider>
+          <v-divider class="mb-16 custom-divider"></v-divider>
 
           <v-row>
             <v-col
@@ -80,7 +80,10 @@
               md="3"
             >
               <div class="text-center milestone-item">
-                <div class="text-h5 milestone-year mb-2">
+                <div
+                  class="text-h5 milestone-year mb-2"
+                  :class="i % 2 === 0 ? 'orange-text' : 'green-text'"
+                >
                   {{ milestone.year }}
                 </div>
                 <div class="text-subtitle-1 milestone-title mb-2">
@@ -139,65 +142,158 @@ const milestones = [
 <style scoped>
 /* Estilos específicos para la sección de nosotros */
 .about-section {
-  background-color: rgba(5, 21, 40, 0.9) !important;
+  background-color: #121212 !important;
+  position: relative;
 }
 
 .section-title {
-  color: #5db9f0 !important;
+  background: linear-gradient(135deg, #ff7e00, #ffb347, #8bc34a, #4caf50);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  font-weight: bold;
 }
 
 .section-subtitle {
-  color: white !important;
+  color: #ffffff !important;
 }
 
 .about-heading {
-  color: #5db9f0 !important;
+  background: linear-gradient(135deg, #ff7e00, #ffb347);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  font-weight: bold;
 }
 
 .about-text {
-  color: white !important;
+  color: rgba(255, 255, 255, 0.8) !important;
 }
 
-.about-btn {
-  color: white !important;
+.orange-text {
+  color: #ff7e00 !important;
 }
 
-.about-image {
-  animation: floatAbout 6s ease-in-out infinite;
+.green-text {
+  color: #4caf50 !important;
 }
 
-@keyframes floatAbout {
+.logo-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-logo {
+  position: relative;
+  z-index: 2;
+  animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
   0% {
-    transform: translateY(0px);
-  }
-  50% {
-    transform: translateY(-15px);
+    transform: rotate(0deg);
   }
   100% {
-    transform: translateY(0px);
+    transform: rotate(360deg);
+  }
+}
+
+.glow-effect {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(40px);
+  opacity: 0.6;
+  z-index: 1;
+}
+
+.orange-glow {
+  background-color: #ff7e00;
+  width: 200px;
+  height: 200px;
+  top: -30px;
+  right: 20%;
+  animation: pulse 6s ease-in-out infinite alternate;
+}
+
+.green-glow {
+  background-color: #4caf50;
+  width: 180px;
+  height: 180px;
+  bottom: -20px;
+  left: 20%;
+  animation: pulse 8s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 0.7;
   }
 }
 
 .value-card {
-  background-color: rgba(93, 185, 240, 0.1) !important;
-  border-bottom: 2px solid #5db9f0;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.value-card:hover {
+  transform: translateY(-5px);
+  background-color: rgba(255, 255, 255, 0.1) !important;
 }
 
 .value-title {
-  color: white !important;
+  color: #ffffff !important;
 }
 
-.milestone-year {
-  color: #5db9f0 !important;
-  font-weight: bold;
+.gradient-btn {
+  background: linear-gradient(135deg, #ff7e00, #ffb347, #8bc34a, #4caf50);
+  color: white !important;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.gradient-btn:hover {
+  box-shadow: 0 5px 15px rgba(255, 126, 0, 0.4);
+}
+
+.custom-divider {
+  background: linear-gradient(
+    to right,
+    transparent,
+    #ff7e00,
+    #4caf50,
+    transparent
+  );
+  height: 1px;
+  border: none;
+  opacity: 0.3;
 }
 
 .milestone-title {
-  color: white !important;
-  font-weight: bold;
+  color: #ffffff !important;
+  font-weight: 600;
 }
 
 .milestone-desc {
-  color: rgba(255, 255, 255, 0.8) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.milestone-item {
+  position: relative;
+  padding: 1rem;
+  transition: all 0.3s ease;
+}
+
+.milestone-item:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  transform: translateY(-5px);
 }
 </style>

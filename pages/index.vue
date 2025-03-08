@@ -17,12 +17,15 @@
     <div v-else-if="currentPage === 'NOSOTROS'">
       <NOSOTROS />
     </div>
+
+    <div v-else-if="currentPage === 'CONTACTO'">
+      <CONTACTO />
+    </div>
   </div>
 </template>
 
 <script setup>
 import { ref, onMounted, inject } from "vue";
-
 // Intentar obtener el currentPage del layout
 let currentPage;
 try {
@@ -45,7 +48,7 @@ onMounted(() => {
 <style>
 /* Estilos globales para la página de inicio */
 .index-page {
-  background-color: #030f1f !important;
+  background-color: #121212 !important;
   color: white;
 }
 

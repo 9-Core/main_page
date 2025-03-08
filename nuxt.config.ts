@@ -1,7 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   devtools: { enabled: false },
-  css: ["vuetify/styles", "ol/ol.css", "@mdi/font/css/materialdesignicons.css"],
+  css: [
+    "vuetify/styles",
+    "ol/ol.css",
+    "@mdi/font/css/materialdesignicons.css",
+    "@/assets/css/theme.css",
+  ],
 
   build: {
     transpile: ["vuetify"],

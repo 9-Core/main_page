@@ -4,19 +4,16 @@
     <!-- Navbar con efecto de transparente a sólido al scroll -->
     <v-app-bar
       :elevation="isScrolled ? 4 : 0"
-      :color="isScrolled ? 'rgba(3, 15, 31, 0.9)' : 'transparent'"
+      :color="isScrolled ? 'rgba(18, 18, 18, 0.9)' : 'transparent'"
       fixed
     >
       <v-container class="d-flex align-center px-6">
-        <div class="d-flex align-center">
-          <v-img src="/logo.png" alt="Logo" max-width="40" class="me-3"></v-img>
-          <v-app-bar-title
-            class="text-h5 font-weight-bold site-title"
-            style="white-space: nowrap; overflow: visible; min-width: 120px"
-          >
-            9Core
-          </v-app-bar-title>
-        </div>
+        <v-img
+          src="/image.png"
+          alt="Logo 9Core"
+          max-width="40"
+          class="me-3"
+        ></v-img>
 
         <v-spacer></v-spacer>
 
@@ -35,10 +32,8 @@
 
           <!-- Botón de contacto destacado -->
           <v-btn
-            color="#5db9f0"
-            class="ml-4 contact-btn white-text"
-            :class="{ 'light-btn': !isScrolled }"
-            to="/contacto"
+            class="ml-4 primary-btn white-text"
+            @click="changePage('CONTACTO')"
           >
             <v-icon start>mdi-email</v-icon>
             Contactar
@@ -61,12 +56,12 @@
     >
       <div class="text-center mb-6">
         <v-img
-          src="/logo.png"
+          src="/image.png"
           alt="Logo"
           max-width="60"
           class="mx-auto mb-4"
         ></v-img>
-        <div class="text-h6 font-weight-bold site-title">9 Core</div>
+        <div class="text-h6 font-weight-bold core-logo-text">9 Core</div>
       </div>
 
       <v-divider class="mb-4 divider"></v-divider>
@@ -89,7 +84,14 @@
         </v-list-item>
 
         <v-list-item class="mt-4">
-          <v-btn block color="#5db9f0" to="/contacto" class="mt-2 white-text">
+          <v-btn
+            block
+            class="primary-btn mt-2 white-text"
+            @click="
+              changePage('CONTACTO');
+              drawer = false;
+            "
+          >
             <v-icon start>mdi-email</v-icon>
             Contactar
           </v-btn>
@@ -124,12 +126,12 @@
           <v-col cols="12" md="4" class="white-text">
             <div class="d-flex align-center mb-4">
               <v-img
-                src="/logo-white.png"
+                src="/image.png"
                 alt="Logo"
                 max-width="40"
                 class="me-3"
               ></v-img>
-              <h3 class="text-h6 font-weight-bold site-title">9 Core</h3>
+              <h3 class="text-h6 font-weight-bold core-logo-text">9 Core</h3>
             </div>
             <p class="text-body-2 mb-4">
               Transformando negocios a través de soluciones tecnológicas
@@ -151,7 +153,7 @@
 
           <!-- Links rápidos -->
           <v-col cols="12" md="4">
-            <h3 class="text-h6 font-weight-bold site-title mb-4">
+            <h3 class="text-h6 font-weight-bold section-title mb-4">
               Links Rápidos
             </h3>
             <v-list class="footer-list">
@@ -171,17 +173,19 @@
 
           <!-- Contacto -->
           <v-col cols="12" md="4">
-            <h3 class="text-h6 font-weight-bold site-title mb-4">Contacto</h3>
+            <h3 class="text-h6 font-weight-bold section-title mb-4">
+              Contacto
+            </h3>
             <div class="d-flex align-center mb-3">
-              <v-icon class="me-2 site-title">mdi-map-marker</v-icon>
+              <v-icon class="me-2 orange-text">mdi-map-marker</v-icon>
               <span class="white-text">123 Calle Principal, Ciudad</span>
             </div>
             <div class="d-flex align-center mb-3">
-              <v-icon class="me-2 site-title">mdi-phone</v-icon>
+              <v-icon class="me-2 orange-text">mdi-phone</v-icon>
               <span class="white-text">+1 234 567 890</span>
             </div>
             <div class="d-flex align-center">
-              <v-icon class="me-2 site-title">mdi-email</v-icon>
+              <v-icon class="me-2 green-text">mdi-email</v-icon>
               <span class="white-text">contacto@9core.com</span>
             </div>
           </v-col>
@@ -199,21 +203,11 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, provide, inject } from "vue";
+import { ref, onMounted, onUnmounted, provide } from "vue";
 
 const drawer = ref(false);
 const isScrolled = ref(false);
 const currentPage = ref("INICIO"); // Valor predeterminado
-
-// Verifica si hay un valor de página proporcionado por algún padre
-try {
-  const parentCurrentPage = inject("currentPage", null);
-  if (parentCurrentPage) {
-    currentPage.value = parentCurrentPage.value;
-  }
-} catch (e) {
-  // Si falla el inject, mantener el valor predeterminado
-}
 
 // Proporcionar el currentPage a los componentes hijos
 provide("currentPage", currentPage);
@@ -243,6 +237,7 @@ const menuItems = [
   { title: "Servicios", page: "SERVICIOS" },
   { title: "Proyectos", page: "PROYECTOS" },
   { title: "Nosotros", page: "NOSOTROS" },
+  { title: "Contacto", page: "CONTACTO" },
 ];
 
 const socialLinks = [
@@ -260,9 +255,9 @@ onMounted(() => {
   window.addEventListener("scroll", handleScroll);
 
   // Forzar tema oscuro
-  document.documentElement.style.setProperty("--v-theme-background", "#030f1f");
-  document.documentElement.style.setProperty("--v-theme-surface", "#030f1f");
-  document.body.style.backgroundColor = "#030f1f";
+  document.documentElement.style.setProperty("--v-theme-background", "#121212");
+  document.documentElement.style.setProperty("--v-theme-surface", "#1e1e1e");
+  document.body.style.backgroundColor = "#121212";
   document.body.style.color = "white";
 });
 
@@ -272,44 +267,62 @@ onUnmounted(() => {
 </script>
 
 <style>
-/* Estilos globales del layout */
-html,
-body {
-  background-color: #030f1f !important;
-  color: white !important;
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
+/* Definición directa de variables para evitar problemas de importación */
+:root {
+  /* Colores primarios del logo */
+  --orange-primary: #ff7e00;
+  --orange-light: #ffb347;
+  --green-primary: #4caf50;
+  --green-light: #8bc34a;
+
+  /* Colores de fondo */
+  --background-dark: #121212;
+  --background-darker: #0a0a0a;
+  --surface-dark: #1e1e1e;
+
+  /* Colores de texto */
+  --text-light: #ffffff;
+  --text-muted: rgba(255, 255, 255, 0.7);
+
+  /* Gradientes */
+  --gradient-orange: linear-gradient(
+    135deg,
+    var(--orange-light),
+    var(--orange-primary)
+  );
+  --gradient-green: linear-gradient(
+    135deg,
+    var(--green-light),
+    var(--green-primary)
+  );
+  --gradient-full: linear-gradient(
+    135deg,
+    var(--orange-primary),
+    var(--orange-light),
+    var(--green-light),
+    var(--green-primary)
+  );
 }
 
-.v-application {
-  background-color: #030f1f !important;
+/* Estilos específicos para el layout */
+.core-logo-text {
+  background: var(--gradient-full);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  font-weight: bold;
 }
 
-.main-content {
-  background-color: #030f1f !important;
-  min-height: 100vh;
+.orange-text {
+  color: var(--orange-primary) !important;
 }
 
-/* Colores y estilos específicos */
-.site-title {
-  color: #5db9f0 !important;
+.green-text {
+  color: var(--green-primary) !important;
 }
 
 .white-text {
-  color: white !important;
-}
-
-.nav-text {
-  color: #5db9f0 !important;
-}
-
-.menu-btn {
-  color: #5db9f0 !important;
-}
-
-.social-btn {
-  color: #5db9f0 !important;
+  color: var(--text-light) !important;
 }
 
 /* Elementos de navegación */
@@ -326,7 +339,7 @@ body {
   transform: translateX(-50%);
   width: 0;
   height: 2px;
-  background-color: #5db9f0;
+  background: var(--gradient-full);
   transition: width 0.3s ease;
 }
 
@@ -335,23 +348,39 @@ body {
   width: 80%;
 }
 
-.light-btn {
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.nav-text {
+  background: var(--gradient-full);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+}
+
+.menu-btn {
+  color: var(--orange-primary) !important;
+}
+
+.social-btn {
+  background: var(--gradient-full);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
 }
 
 .drawer-bg {
-  background-color: #030f1f !important;
-  border-left: 1px solid rgba(93, 185, 240, 0.2);
+  background-color: var(--background-dark) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Botones */
+.primary-btn {
+  background: var(--gradient-orange) !important;
+  color: white !important;
 }
 
 /* Footer */
 .footer {
-  background-color: #030f1f !important;
-  border-top: 1px solid rgba(93, 185, 240, 0.2);
+  background-color: var(--background-darker) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .footer-list {
@@ -364,7 +393,16 @@ body {
 }
 
 .divider {
-  border-color: rgba(93, 185, 240, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Titles */
+.section-title {
+  background: var(--gradient-full);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  font-weight: bold;
 }
 
 /* Transitions */

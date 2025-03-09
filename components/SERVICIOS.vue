@@ -17,8 +17,8 @@
             v-bind="props"
             :elevation="isHovering ? 8 : 2"
             height="100%"
-            class="service-card hover-effect"
-            :class="i % 2 === 0 ? 'orange-card' : 'green-card'"
+            class="service-card"
+            :class="i % 2 === 0 ? 'orange-border' : 'green-border'"
           >
             <v-card-item>
               <v-icon
@@ -54,38 +54,76 @@
 <script setup>
 const services = [
   {
-    icon: "mdi-laptop-account",
-    title: "Consultoría IT",
+    icon: "mdi-cog-refresh",
+    title: "Automatización y Optimización de Procesos",
     description:
-      "Asesoramiento estratégico para optimizar tus procesos tecnológicos y maximizar el ROI.",
+      "Mejoramos la eficiencia operativa mediante la automatización de flujos de trabajo y optimización de procesos empresariales clave.",
   },
   {
     icon: "mdi-code-braces",
-    title: "Desarrollo Software",
+    title: "Desarrollo de Sistemas y Software",
     description:
-      "Soluciones personalizadas utilizando las últimas tecnologías y mejores prácticas.",
+      "Creamos sistemas y aplicaciones personalizadas utilizando tecnologías modernas e innovadoras que se adaptan a tus necesidades específicas.",
+  },
+  {
+    icon: "mdi-account-group",
+    title: "Outsourcing",
+    description:
+      "Proporcionamos servicios de externalización de TI de alta calidad, permitiéndote enfocarte en tu negocio principal mientras gestionamos tu infraestructura tecnológica.",
   },
   {
     icon: "mdi-cloud",
     title: "Cloud Solutions",
     description:
-      "Implementación y gestión de infraestructuras cloud escalables y seguras.",
+      "Implementamos y gestionamos infraestructuras cloud escalables, seguras y rentables para optimizar tus operaciones digitales.",
   },
   {
-    icon: "mdi-shield-check",
-    title: "Ciberseguridad",
+    icon: "mdi-cogs",
+    title: "Servicios TI",
     description:
-      "Protección integral para tus activos digitales y datos sensibles.",
+      "Ofrecemos una gama completa de servicios de tecnología de la información, desde soporte técnico hasta planificación estratégica.",
   },
   {
     icon: "mdi-robot",
-    title: "Inteligencia Artificial",
-    description: "Soluciones de IA y Machine Learning para optimizar procesos.",
+    title: "Soluciones con IA",
+    description:
+      "Integramos inteligencia artificial en tus procesos para mejorar la toma de decisiones, automatizar tareas repetitivas y descubrir nuevas oportunidades.",
   },
   {
-    icon: "mdi-view-dashboard",
-    title: "Analytics",
-    description: "Análisis de datos para una toma de decisiones informada.",
+    icon: "mdi-cellphone",
+    title: "Desarrollo de Aplicaciones Móviles",
+    description:
+      "Creamos aplicaciones nativas y multiplataforma que brindan experiencias excepcionales a tus usuarios en cualquier dispositivo.",
+  },
+  {
+    icon: "mdi-chart-bar",
+    title: "Data Analytics",
+    description:
+      "Transformamos tus datos en insights accionables mediante análisis avanzados, visualizaciones y dashboards interactivos.",
+  },
+  {
+    icon: "mdi-school",
+    title: "Capacitación",
+    description:
+      "Desarrollamos programas de formación personalizados para que tu equipo domine las tecnologías implementadas y maximice su potencial.",
+  },
+  {
+    icon: "mdi-refresh",
+    title: "Servicio Continuo",
+    description:
+      "Proporcionamos mantenimiento, actualizaciones y soporte permanente para garantizar que tus soluciones tecnológicas evolucionen con tu negocio.",
+  },
+  {
+    icon: "mdi-lightbulb",
+    title: "Asesoría Tecnológica",
+    description:
+      "Ofrecemos consultoría estratégica para alinear tus iniciativas tecnológicas con tus objetivos de negocio, maximizando el retorno de inversión.",
+  },
+  {
+    icon: "mdi-alert-decagram",
+    title: "Automatización de Procesos",
+    description:
+      "Implementamos tecnologías RPA (Robotic Process Automation) y flujos de trabajo inteligentes para reducir costes y eliminar errores en procesos repetitivos.",
   },
 ];
 </script>
@@ -93,7 +131,7 @@ const services = [
 <style scoped>
 /* Estilos específicos para la sección de servicios */
 .section-title {
-  background: var(--gradient-full);
+  background: linear-gradient(135deg, #ff7e00, #ffb347, #8bc34a, #4caf50);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent !important;
@@ -101,58 +139,41 @@ const services = [
 }
 
 .section-subtitle {
-  color: var(--text-light) !important;
+  color: #ffffff !important;
 }
 
 .service-card {
-  background-color: var(--surface-dark) !important;
+  background-color: #1e1e1e !important;
   transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  border-top: 3px solid transparent;
 }
 
-.service-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 3px;
+.orange-border {
+  border-image: linear-gradient(to right, #ff7e00, #ffb347) 1;
 }
 
-.orange-card::before {
-  background: var(--gradient-orange);
-}
-
-.green-card::before {
-  background: var(--gradient-green);
+.green-border {
+  border-image: linear-gradient(to right, #4caf50, #8bc34a) 1;
 }
 
 .service-title {
-  color: var(--text-light) !important;
+  color: #ffffff !important;
 }
 
 .service-text {
-  color: var(--text-muted) !important;
-}
-
-.service-btn {
-  font-weight: 500;
+  color: rgba(255, 255, 255, 0.7) !important;
 }
 
 .orange-text {
-  color: var(--orange-primary) !important;
+  color: #ff7e00 !important;
 }
 
 .green-text {
-  color: var(--green-primary) !important;
+  color: #4caf50 !important;
 }
 
-.hover-effect {
-  transition: all 0.3s ease;
-}
-
-.hover-effect:hover {
+.service-card:hover {
   transform: translateY(-10px);
+  box-shadow: 0 12px 20px rgba(0, 0, 0, 0.5) !important;
 }
 </style>

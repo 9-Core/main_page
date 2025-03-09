@@ -60,10 +60,63 @@
           class="d-flex justify-center mb-8 mb-md-0"
         >
           <div class="logo-container">
-            <v-img src="/logo.png" max-width="400" class="about-logo"></v-img>
+            <v-img src="/image.png" max-width="400" class="about-logo"></v-img>
             <div class="glow-effect orange-glow"></div>
             <div class="glow-effect green-glow"></div>
           </div>
+        </v-col>
+      </v-row>
+
+      <!-- Misión y Visión -->
+      <v-row class="mission-vision-section my-16">
+        <v-col cols="12" md="6" class="mb-8 mb-md-0">
+          <v-card class="mission-card h-100">
+            <v-card-item>
+              <div class="d-flex align-center mb-4">
+                <div class="mission-icon-wrapper orange-bg mr-4">
+                  <v-icon icon="mdi-flag" size="32" color="white"></v-icon>
+                </div>
+                <h3 class="text-h4 mission-title">Misión</h3>
+              </div>
+              <v-card-text class="pa-0">
+                <p class="text-body-1 mission-text">
+                  Impulsamos el crecimiento y la competitividad de las
+                  organizaciones con soluciones innovadoras, diseñadas a la
+                  medida de cada necesidad. Proporcionamos tecnología ágil y
+                  escalable que optimiza procesos, generando valor real y
+                  sostenible. Nuestro compromiso con la excelencia, la atención
+                  personalizada y el acompañamiento continuo garantiza que cada
+                  implementación convierta desafíos en oportunidades de éxito.
+                </p>
+              </v-card-text>
+            </v-card-item>
+          </v-card>
+        </v-col>
+
+        <v-col cols="12" md="6">
+          <v-card class="vision-card h-100">
+            <v-card-item>
+              <div class="d-flex align-center mb-4">
+                <div class="mission-icon-wrapper green-bg mr-4">
+                  <v-icon icon="mdi-eye" size="32" color="white"></v-icon>
+                </div>
+                <h3 class="text-h4 vision-title">Visión</h3>
+              </div>
+              <v-card-text class="pa-0">
+                <p class="text-body-1 mission-text">
+                  Ser referentes en la transformación digital de las
+                  organizaciones mediante soluciones innovadoras que generen un
+                  impacto real en su crecimiento y competitividad. Buscamos ser
+                  reconocidos por nuestra excelencia tecnológica, nuestra
+                  capacidad para resolver desafíos complejos y nuestro
+                  compromiso con el éxito de cada cliente. Aspiramos a
+                  contribuir en el ecosistema digital, creando tecnología que
+                  impulse el progreso y deje una huella duradera en la
+                  industria.
+                </p>
+              </v-card-text>
+            </v-card-item>
+          </v-card>
         </v-col>
       </v-row>
 
@@ -261,6 +314,7 @@ const milestones = [
 
 .gradient-btn:hover {
   box-shadow: 0 5px 15px rgba(255, 126, 0, 0.4);
+  transform: translateY(-3px);
 }
 
 .custom-divider {
@@ -295,5 +349,72 @@ const milestones = [
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 8px;
   transform: translateY(-5px);
+}
+
+/* Estilos para misión y visión */
+.mission-vision-section {
+  position: relative;
+}
+
+.mission-card,
+.vision-card {
+  background-color: rgba(255, 255, 255, 0.03) !important;
+  border-radius: 12px;
+  height: 100%;
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.mission-card {
+  border-left: 4px solid #ff7e00;
+}
+
+.vision-card {
+  border-left: 4px solid #4caf50;
+}
+
+.mission-card:hover,
+.vision-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+}
+
+.mission-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+.orange-bg {
+  background-color: rgba(255, 126, 0, 0.8);
+}
+
+.green-bg {
+  background-color: rgba(76, 175, 80, 0.8);
+}
+
+.mission-title {
+  background: linear-gradient(135deg, #ff7e00, #ffb347);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  font-weight: bold;
+}
+
+.vision-title {
+  background: linear-gradient(135deg, #4caf50, #8bc34a);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  font-weight: bold;
+}
+
+.mission-text {
+  color: rgba(255, 255, 255, 0.8) !important;
+  line-height: 1.7;
 }
 </style>

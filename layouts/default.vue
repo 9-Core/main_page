@@ -170,7 +170,6 @@
               </v-list-item>
             </v-list>
           </v-col>
-
           <!-- Contacto -->
           <v-col cols="12" md="4">
             <h3 class="text-h6 font-weight-bold section-title mb-4">
@@ -236,7 +235,6 @@ const menuItems = [
   { title: "Inicio", page: "INICIO" },
   { title: "Servicios", page: "SERVICIOS" },
   { title: "Nosotros", page: "NOSOTROS" },
-  { title: "Contacto", page: "CONTACTO" },
 ];
 
 const socialLinks = [

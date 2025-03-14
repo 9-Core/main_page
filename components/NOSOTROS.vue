@@ -30,22 +30,6 @@
             digital.
           </p>
 
-          <v-row class="mb-6">
-            <v-col v-for="(value, i) in companyValues" :key="i" cols="6" sm="4">
-              <v-card class="value-card pa-4 text-center" flat>
-                <v-icon
-                  :icon="value.icon"
-                  size="36"
-                  :class="i % 2 === 0 ? 'orange-text' : 'green-text'"
-                  class="mb-2"
-                ></v-icon>
-                <div class="text-subtitle-1 font-weight-bold value-title">
-                  {{ value.title }}
-                </div>
-              </v-card>
-            </v-col>
-          </v-row>
-
           <v-btn class="gradient-btn">
             Conoce al equipo
             <v-icon end icon="mdi-account-group"></v-icon>
@@ -64,6 +48,52 @@
             <div class="glow-effect orange-glow"></div>
             <div class="glow-effect green-glow"></div>
           </div>
+        </v-col>
+      </v-row>
+
+      <!-- Tarjetas de valores 9C -->
+      <v-row class="mt-12">
+        <v-col cols="12" class="text-center mb-8">
+          <h3 class="text-h4 values-heading">
+            Nuestras 9 C - Valores Fundamentales
+          </h3>
+          <div class="values-divider mx-auto"></div>
+        </v-col>
+      </v-row>
+
+      <v-row class="values-row">
+        <v-col
+          v-for="(value, i) in companyValues"
+          :key="i"
+          cols="12"
+          sm="6"
+          md="4"
+          class="mb-6"
+        >
+          <v-hover v-slot="{ isHovering, props }">
+            <v-card
+              v-bind="props"
+              :class="[
+                'value-card',
+                i % 2 === 0 ? 'value-card-orange' : 'value-card-green',
+              ]"
+              :elevation="isHovering ? 10 : 2"
+              height="100%"
+            >
+              <div class="card-content">
+                <div
+                  :class="[
+                    'circle-icon',
+                    i % 2 === 0 ? 'orange-gradient' : 'green-gradient',
+                  ]"
+                >
+                  <span class="c-letter">C</span>
+                </div>
+                <h4 class="value-title">{{ value.title }}</h4>
+                <p class="value-description">{{ value.description }}</p>
+              </div>
+            </v-card>
+          </v-hover>
         </v-col>
       </v-row>
 
@@ -155,13 +185,53 @@
 </template>
 
 <script setup>
+// Array de valores de la empresa (todos comienzan con C)
 const companyValues = [
-  { title: "Innovación", icon: "mdi-lightbulb" },
-  { title: "Calidad", icon: "mdi-check-decagram" },
-  { title: "Compromiso", icon: "mdi-handshake" },
-  { title: "Transparencia", icon: "mdi-eye" },
-  { title: "Colaboración", icon: "mdi-account-group" },
-  { title: "Adaptabilidad", icon: "mdi-refresh" },
+  {
+    title: "Compromiso",
+    description:
+      "Nos dedicamos con pasión a cada proyecto, asumiendo responsabilidad total con nuestros clientes y sus objetivos de negocio.",
+  },
+  {
+    title: "Calidad",
+    description:
+      "Buscamos la excelencia en todo lo que hacemos, implementando soluciones robustas y fiables que superan las expectativas.",
+  },
+  {
+    title: "Colaboración",
+    description:
+      "Trabajamos juntos con nuestros clientes como verdaderos socios, compartiendo conocimientos y construyendo relaciones duraderas.",
+  },
+  {
+    title: "Competencia",
+    description:
+      "Mantenemos un alto nivel de habilidades técnicas y conocimientos especializados para ofrecer las mejores soluciones.",
+  },
+  {
+    title: "Confianza",
+    description:
+      "Construimos relaciones basadas en la transparencia, la honestidad y el cumplimiento consistente de nuestras promesas.",
+  },
+  {
+    title: "Creatividad",
+    description:
+      "Aplicamos pensamiento innovador para desarrollar soluciones originales que resuelven los desafíos más complejos.",
+  },
+  {
+    title: "Claridad",
+    description:
+      "Nos comunicamos de manera simple y directa, haciendo comprensibles los conceptos técnicos complejos.",
+  },
+  {
+    title: "Comunicación",
+    description:
+      "Mantenemos un diálogo abierto y constante con nuestros clientes durante todo el ciclo de desarrollo.",
+  },
+  {
+    title: "Constancia",
+    description:
+      "Perseveramos ante los obstáculos, manteniendo un esfuerzo sostenido para alcanzar los objetivos establecidos.",
+  },
 ];
 
 const milestones = [
@@ -290,19 +360,91 @@ const milestones = [
   }
 }
 
+/* Estilos para los valores (tarjetas) */
+.values-heading {
+  color: white;
+  position: relative;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.values-divider {
+  height: 4px;
+  width: 100px;
+  background: linear-gradient(135deg, #ff7e00, #ffb347, #8bc34a, #4caf50);
+  margin-bottom: 3rem;
+  border-radius: 2px;
+}
+
+.values-row {
+  margin-bottom: 2rem;
+}
+
 .value-card {
-  background-color: rgba(255, 255, 255, 0.05) !important;
-  transition: all 0.3s ease;
-  border-radius: 8px;
+  background-color: rgba(30, 30, 30, 0.8) !important;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  position: relative;
+  height: 100%;
+}
+
+.value-card-orange {
+  border-top: 4px solid #ff7e00;
+}
+
+.value-card-green {
+  border-top: 4px solid #4caf50;
 }
 
 .value-card:hover {
-  transform: translateY(-5px);
-  background-color: rgba(255, 255, 255, 0.1) !important;
+  transform: translateY(-15px);
+}
+
+.card-content {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.circle-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+.orange-gradient {
+  background: linear-gradient(135deg, #ff7e00, #ffb347);
+}
+
+.green-gradient {
+  background: linear-gradient(135deg, #4caf50, #8bc34a);
+}
+
+.c-letter {
+  color: white;
+  font-size: 36px;
+  font-weight: bold;
 }
 
 .value-title {
-  color: #ffffff !important;
+  color: white;
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}
+
+.value-description {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  line-height: 1.6;
 }
 
 .gradient-btn {
@@ -416,5 +558,16 @@ const milestones = [
 .mission-text {
   color: rgba(255, 255, 255, 0.8) !important;
   line-height: 1.7;
+}
+
+/* Media queries para responsividad */
+@media (max-width: 960px) {
+  .value-card {
+    margin-bottom: 1rem;
+  }
+
+  .values-row {
+    margin-top: 0;
+  }
 }
 </style>

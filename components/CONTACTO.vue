@@ -246,23 +246,72 @@ const submitForm = async () => {
 
   loading.value = true;
 
-  // Simulación de envío de formulario
-  await new Promise((resolve) => setTimeout(resolve, 1500));
+  try {
+    // Crear el contenido HTML del correo
+    const htmlContent = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; border-radius: 5px;">
+        <h2 style="color: #ff7e00;">Nuevo mensaje desde el formulario de contacto</h2>
+        <p><strong>Nombre:</strong> ${form.value.name}</p>
+        <p><strong>Email:</strong> <a href="mailto:${form.value.email}">${
+      form.value.email
+    }</a></p>
+        ${
+          form.value.service
+            ? `<p><strong>Servicio de interés:</strong> ${form.value.service}</p>`
+            : ""
+        }
+        <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin-top: 15px;">
+          <h3 style="margin-top: 0; color: #4caf50;">Mensaje:</h3>
+          <p style="white-space: pre-line;">${form.value.message}</p>
+        </div>
+      </div>
+    `;
 
-  loading.value = false;
-  snackbar.value = {
-    show: true,
-    text: "¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.",
-    color: "#4caf50",
-  };
+    // Enviar solicitud a la API
+    const { data, error } = await useFetch("/api/send", {
+      method: "POST",
+      body: {
+        to: "contacto@9core.com", // Correo de destino
+        subject: `Formulario de contacto - ${
+          form.value.service || "Consulta general"
+        }`,
+        text: `Mensaje de ${form.value.name} (${form.value.email}): ${form.value.message}`,
+        html: htmlContent,
+        from: `Sitio Web 9core <no-reply@9core.com>`,
+        replyTo: form.value.email,
+      },
+    });
 
-  // Resetear el formulario
-  form.value = {
-    name: "",
-    email: "",
-    service: "",
-    message: "",
-  };
+    if (error.value) {
+      throw new Error(error.value.message || "Error al enviar el mensaje");
+    }
+
+    // Mostrar mensaje de éxito
+    snackbar.value = {
+      show: true,
+      text: "¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.",
+      color: "#4caf50",
+    };
+
+    // Resetear el formulario
+    form.value = {
+      name: "",
+      email: "",
+      service: "",
+      message: "",
+    };
+  } catch (error) {
+    console.error("Error al enviar el mensaje:", error);
+
+    // Mostrar mensaje de error
+    snackbar.value = {
+      show: true,
+      text: "Hubo un problema al enviar el mensaje. Por favor, inténtalo de nuevo.",
+      color: "#f44336", // Color rojo para error
+    };
+  } finally {
+    loading.value = false;
+  }
 };
 </script>
 

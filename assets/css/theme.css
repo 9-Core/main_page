@@ -1,74 +1,117 @@
 /* Archivo de estilos globales - assets/css/theme.css */
 
 :root {
-  /* Colores primarios del logo */
-  --orange-primary: #ff7e00;
-  --orange-light: #ffb347;
-  --green-primary: #4caf50;
-  --green-light: #8bc34a;
+  /* Colores primarios */
+  --primary-main: #3d5af1;
+  --primary-main-rgb: 61, 90, 241;
+  --primary-light: #6b7eff;
+  --primary-light-rgb: 107, 126, 255;
+  --primary-dark: #2a3dad;
+  --primary-dark-rgb: 42, 61, 173;
+
+  /* Colores secundarios */
+  --secondary-main: #ff6b6b;
+  --secondary-main-rgb: 255, 107, 107;
+  --secondary-light: #ff9e9e;
+  --secondary-light-rgb: 255, 158, 158;
+  --secondary-dark: #e54e4e;
+  --secondary-dark-rgb: 229, 78, 78;
+
+  /* Colores terciarios */
+  --tertiary-main: #22caac;
+  --tertiary-main-rgb: 34, 202, 172;
+  --tertiary-light: #4eecd2;
+  --tertiary-light-rgb: 78, 236, 210;
+  --tertiary-dark: #169c83;
+  --tertiary-dark-rgb: 22, 156, 131;
+
+  /* Colores neutrales */
+  --neutral-darkest: #1a1b25;
+  --neutral-dark: #2d2e3f;
+  --neutral-medium: #6c6f8a;
+  --neutral-light: #e4e6f5;
+  --neutral-lightest: #ffffff;
 
   /* Colores de fondo */
-  --background-dark: #121212;
-  --background-darker: #0a0a0a;
-  --surface-dark: #1e1e1e;
+  --background-default: #f7f8fc;
+  --background-paper: #ffffff;
+  --background-dark: #131525;
 
-  /* Colores de texto */
-  --text-light: #ffffff;
+  /* Texto */
+  --text-primary: var(--neutral-darkest);
+  --text-secondary: var(--neutral-medium);
+  --text-light: var(--neutral-lightest);
   --text-muted: rgba(255, 255, 255, 0.7);
 
   /* Gradientes */
-  --gradient-orange: linear-gradient(
+  --gradient-primary: linear-gradient(
     135deg,
-    var(--orange-light),
-    var(--orange-primary)
+    var(--primary-light),
+    var(--primary-dark)
   );
-  --gradient-green: linear-gradient(
+  --gradient-secondary: linear-gradient(
     135deg,
-    var(--green-light),
-    var(--green-primary)
+    var(--secondary-light),
+    var(--secondary-dark)
+  );
+  --gradient-tertiary: linear-gradient(
+    135deg,
+    var(--tertiary-light),
+    var(--tertiary-dark)
   );
   --gradient-full: linear-gradient(
     135deg,
-    var(--orange-primary),
-    var(--orange-light),
-    var(--green-light),
-    var(--green-primary)
+    var(--primary-main),
+    var(--primary-light),
+    var(--secondary-main),
+    var(--tertiary-main)
   );
 }
 
 /* Estilos globales */
 html,
 body {
+  background-color: var(--background-default) !important;
+  color: var(--text-primary) !important;
+}
+
+.v-application {
+  background-color: var(--background-default) !important;
+}
+
+.main-content {
+  background-color: var(--background-default) !important;
+}
+
+/* Versión oscura - para secciones con fondo oscuro */
+.dark-section {
   background-color: var(--background-dark) !important;
   color: var(--text-light) !important;
 }
 
-.v-application {
-  background-color: var(--background-dark) !important;
-}
-
-.main-content {
-  background-color: var(--background-dark) !important;
-}
-
 /* Botones y elementos de acción */
 .primary-btn {
-  background: var(--gradient-orange) !important;
+  background: var(--gradient-primary) !important;
   color: white !important;
 }
 
 .secondary-btn {
-  background: var(--gradient-green) !important;
+  background: var(--gradient-secondary) !important;
+  color: white !important;
+}
+
+.tertiary-btn {
+  background: var(--gradient-tertiary) !important;
   color: white !important;
 }
 
 .accent-btn {
   position: relative;
   overflow: hidden;
-  background: var(--background-dark) !important;
+  background: var(--background-paper) !important;
   border: 1px solid transparent !important;
   border-image: var(--gradient-full) 1 !important;
-  color: white !important;
+  color: var(--primary-main) !important;
 }
 
 /* Títulos y encabezados */
@@ -81,15 +124,16 @@ body {
 }
 
 .section-subtitle {
-  color: var(--text-light) !important;
+  color: var(--text-secondary) !important;
 }
 
 /* Tarjetas y elementos de contenido */
 .feature-card {
-  background-color: var(--surface-dark) !important;
+  background-color: var(--background-paper) !important;
   border-top: 3px solid transparent;
   border-image: var(--gradient-full) 1;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(42, 61, 173, 0.08);
 }
 
 /* Elementos de navegación */
@@ -99,12 +143,86 @@ body {
 
 /* Footer */
 .footer {
-  background-color: var(--background-darker) !important;
+  background-color: var(--background-dark) !important;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-light);
 }
 
 /* Efectos de hover y selección */
 .hover-effect:hover {
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 16px rgba(42, 61, 173, 0.15);
   transform: translateY(-5px);
+}
+
+/* Clases de color de texto */
+.primary-text {
+  color: var(--primary-main) !important;
+}
+
+.secondary-text {
+  color: var(--secondary-main) !important;
+}
+
+.tertiary-text {
+  color: var(--tertiary-main) !important;
+}
+
+/* Clases para fondos */
+.primary-bg {
+  background-color: var(--primary-main) !important;
+}
+
+.secondary-bg {
+  background-color: var(--secondary-main) !important;
+}
+
+.tertiary-bg {
+  background-color: var(--tertiary-main) !important;
+}
+
+/* Reemplazos de las clases antiguas para compatibilidad */
+.orange-text {
+  color: var(--primary-main) !important;
+}
+
+.green-text {
+  color: var(--tertiary-main) !important;
+}
+
+.orange-bg {
+  background-color: rgba(61, 90, 241, 0.15) !important;
+}
+
+.green-bg {
+  background-color: rgba(34, 202, 172, 0.15) !important;
+}
+
+.orange-glow {
+  box-shadow: 0 10px 30px rgba(61, 90, 241, 0.15);
+}
+
+.green-glow {
+  box-shadow: 0 10px 30px rgba(34, 202, 172, 0.15);
+}
+
+.orange-gradient {
+  background: var(--gradient-primary);
+}
+
+.green-gradient {
+  background: var(--gradient-tertiary);
+}
+
+.gradient-btn {
+  background: var(--gradient-full);
+  color: white !important;
+  height: 48px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border-radius: 8px;
+}
+
+.gradient-btn:hover {
+  box-shadow: 0 5px 15px rgba(61, 90, 241, 0.4);
+  transform: translateY(-3px);
 }

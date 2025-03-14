@@ -171,23 +171,6 @@
           </div>
         </v-col>
       </v-row>
-
-      <v-row class="mt-16">
-        <v-col cols="12">
-          <div class="map-container">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12345.678901234567!2d-3.7037902!3d40.4167754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd422997800a3c81%3A0xc436dec1618c2269!2sMadrid%2C%20Spain!5e0!3m2!1sen!2sus!4v1600000000000!5m2!1sen!2sus"
-              width="100%"
-              height="450"
-              style="border: 0"
-              allowfullscreen=""
-              loading="lazy"
-              class="map-iframe"
-            ></iframe>
-            <div class="map-overlay"></div>
-          </div>
-        </v-col>
-      </v-row>
     </v-container>
   </v-container>
 </template>

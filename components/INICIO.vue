@@ -1,40 +1,38 @@
-<!-- components/HeroSection.vue -->
+<!-- components/HeroMinimal.vue -->
 <template>
-  <v-container fluid class="hero pa-0">
-    <v-row class="align-center ma-0" style="min-height: 90vh">
-      <v-col cols="12" md="6" class="px-8">
-        <v-slide-x-transition appear>
-          <div>
-            <h1 class="text-h2 font-weight-bold mb-6 hero-title">
-              Innovación Digital para tu Empresa
-            </h1>
-            <p class="text-h5 mb-8 hero-subtitle">
-              Transformamos ideas en soluciones tecnológicas que impulsan el
-              crecimiento de tu negocio
-            </p>
-            <div class="d-flex flex-wrap gap-4">
-              <v-btn size="x-large" class="primary-btn mr-4">
-                <v-icon start icon="mdi-rocket-launch"></v-icon>
-                Comenzar Ahora
-              </v-btn>
-              <v-btn size="x-large" class="secondary-btn">
-                <v-icon start icon="mdi-information"></v-icon>
-                Conoce Más
-              </v-btn>
-            </div>
-          </div>
-        </v-slide-x-transition>
-      </v-col>
-      <v-col cols="12" md="6" class="d-none d-md-flex justify-center">
-        <div class="hero-image-container">
-          <v-img src="/logo.png" max-width="400" class="hero-animation"></v-img>
+  <v-container fluid class="hero-minimal pa-0">
+    <v-row class="align-center justify-center ma-0" style="min-height: 100vh">
+      <v-col cols="12" class="text-center">
+        <div class="logo-container mb-12">
+          <v-img
+            src="/logo.png"
+            max-width="300"
+            class="mx-auto hero-logo"
+            alt="9-CORE Logo"
+          ></v-img>
         </div>
+
+        <h1 class="text-h2 font-weight-bold mb-8 company-name primary-text">
+          CORE<span class="vertical-bar">|</span>
+        </h1>
+
+        <p class="text-h5 mb-12 hero-tagline">
+          Nuestro compromiso es ofrecer soluciones innovadoras
+        </p>
+
+        <v-btn
+          size="x-large"
+          class="gradient-btn px-8 py-3"
+          min-width="200"
+          rounded="pill"
+        >
+          CONÓCENOS
+        </v-btn>
       </v-col>
     </v-row>
 
-    <!-- Partículas/elementos decorativos con los colores del logo -->
-    <div class="decorative-element orange-element"></div>
-    <div class="decorative-element green-element"></div>
+    <!-- Degradado de fondo sutil -->
+    <div class="background-overlay"></div>
   </v-container>
 </template>
 
@@ -43,93 +41,88 @@
 </script>
 
 <style scoped>
-/* Hero Section */
-.hero {
-  background-color: var(--background-dark) !important;
-  color: var(--text-light);
+.hero-minimal {
   position: relative;
+  background-color: var(--neutral-light);
   overflow: hidden;
 }
 
-.hero-title {
-  background: var(--gradient-full);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent !important;
+.company-name {
+  letter-spacing: 2px;
+  font-size: 4rem !important;
+  position: relative;
+  display: inline-block;
+}
+
+.vertical-bar {
+  color: var(--primary-main);
   font-weight: bold;
+  margin-left: 5px;
 }
 
-.hero-subtitle {
-  color: var(--text-light) !important;
+.hero-tagline {
+  color: var(--neutral-medium);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  font-weight: 400;
 }
 
-.hero-image-container {
+.logo-container {
   position: relative;
   z-index: 2;
 }
 
-.hero-animation {
-  animation: float 6s ease-in-out infinite;
+.hero-logo {
+  transition: all 0.8s ease;
 }
 
-@keyframes float {
-  0% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  50% {
-    transform: translateY(-20px) rotate(5deg);
-  }
-  100% {
-    transform: translateY(0px) rotate(0deg);
-  }
+.hero-logo:hover {
+  transform: rotate(10deg) scale(1.05);
 }
 
-/* Elementos decorativos */
-.decorative-element {
+.gradient-btn {
+  background: var(--gradient-full);
+  color: white !important;
+  letter-spacing: 1px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(61, 90, 241, 0.25);
+}
+
+.gradient-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(61, 90, 241, 0.35);
+}
+
+.background-overlay {
   position: absolute;
-  border-radius: 50%;
-  filter: blur(60px);
-  opacity: 0.5;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+      circle at 30% 70%,
+      rgba(var(--primary-main-rgb), 0.05),
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 70% 30%,
+      rgba(var(--tertiary-main-rgb), 0.05),
+      transparent 60%
+    );
   z-index: 1;
+  pointer-events: none;
 }
 
-.orange-element {
-  background-color: var(--orange-primary);
-  width: 300px;
-  height: 300px;
-  top: -100px;
-  right: 10%;
-  animation: pulse-orange 8s ease-in-out infinite alternate;
-}
-
-.green-element {
-  background-color: var(--green-primary);
-  width: 250px;
-  height: 250px;
-  bottom: -50px;
-  left: 5%;
-  animation: pulse-green 10s ease-in-out infinite alternate;
-}
-
-@keyframes pulse-orange {
-  0% {
-    transform: scale(0.8) translate(0, 0);
-    opacity: 0.3;
+@media (max-width: 600px) {
+  .company-name {
+    font-size: 3rem !important;
   }
-  100% {
-    transform: scale(1.2) translate(50px, 30px);
-    opacity: 0.5;
-  }
-}
 
-@keyframes pulse-green {
-  0% {
-    transform: scale(0.9) translate(0, 0);
-    opacity: 0.3;
-  }
-  100% {
-    transform: scale(1.3) translate(-30px, 50px);
-    opacity: 0.5;
+  .hero-tagline {
+    font-size: 1.25rem !important;
+    padding: 0 16px;
   }
 }
 </style>

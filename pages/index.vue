@@ -10,10 +10,6 @@
       <SERVICIOS />
     </div>
 
-    <div v-else-if="currentPage === 'PROYECTOS'">
-      <PROYECTOS />
-    </div>
-
     <div v-else-if="currentPage === 'NOSOTROS'">
       <NOSOTROS />
     </div>

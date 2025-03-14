@@ -51,52 +51,6 @@
         </v-col>
       </v-row>
 
-      <!-- Tarjetas de valores 9C -->
-      <v-row class="mt-12">
-        <v-col cols="12" class="text-center mb-8">
-          <h3 class="text-h4 values-heading">
-            Nuestras 9 C - Valores Fundamentales
-          </h3>
-          <div class="values-divider mx-auto"></div>
-        </v-col>
-      </v-row>
-
-      <v-row class="values-row">
-        <v-col
-          v-for="(value, i) in companyValues"
-          :key="i"
-          cols="12"
-          sm="6"
-          md="4"
-          class="mb-6"
-        >
-          <v-hover v-slot="{ isHovering, props }">
-            <v-card
-              v-bind="props"
-              :class="[
-                'value-card',
-                i % 2 === 0 ? 'value-card-orange' : 'value-card-green',
-              ]"
-              :elevation="isHovering ? 10 : 2"
-              height="100%"
-            >
-              <div class="card-content">
-                <div
-                  :class="[
-                    'circle-icon',
-                    i % 2 === 0 ? 'orange-gradient' : 'green-gradient',
-                  ]"
-                >
-                  <span class="c-letter">C</span>
-                </div>
-                <h4 class="value-title">{{ value.title }}</h4>
-                <p class="value-description">{{ value.description }}</p>
-              </div>
-            </v-card>
-          </v-hover>
-        </v-col>
-      </v-row>
-
       <!-- Misión y Visión -->
       <v-row class="mission-vision-section my-16">
         <v-col cols="12" md="6" class="mb-8 mb-md-0">

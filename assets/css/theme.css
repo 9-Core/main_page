@@ -1,7 +1,7 @@
 /* Archivo de estilos globales - assets/css/theme.css */
 
 :root {
-  /* Colores primarios */
+  /* Colores primarios - Azul */
   --primary-main: #3d5af1;
   --primary-main-rgb: 61, 90, 241;
   --primary-light: #6b7eff;
@@ -9,15 +9,15 @@
   --primary-dark: #2a3dad;
   --primary-dark-rgb: 42, 61, 173;
 
-  /* Colores secundarios */
-  --secondary-main: #ff6b6b;
-  --secondary-main-rgb: 255, 107, 107;
-  --secondary-light: #ff9e9e;
-  --secondary-light-rgb: 255, 158, 158;
-  --secondary-dark: #e54e4e;
-  --secondary-dark-rgb: 229, 78, 78;
+  /* Colores secundarios - Morado */
+  --secondary-main: #7b42f6;
+  --secondary-main-rgb: 123, 66, 246;
+  --secondary-light: #9e6ffd;
+  --secondary-light-rgb: 158, 111, 253;
+  --secondary-dark: #5b2acf;
+  --secondary-dark-rgb: 91, 42, 207;
 
-  /* Colores terciarios */
+  /* Colores terciarios - Verde */
   --tertiary-main: #22caac;
   --tertiary-main-rgb: 34, 202, 172;
   --tertiary-light: #4eecd2;
@@ -62,9 +62,14 @@
   --gradient-full: linear-gradient(
     135deg,
     var(--primary-main),
-    var(--primary-light),
     var(--secondary-main),
     var(--tertiary-main)
+  );
+  --gradient-mati: linear-gradient(
+    135deg,
+    var(--primary-light),
+    var(--secondary-main),
+    var(--tertiary-light)
   );
 }
 
@@ -102,6 +107,11 @@ body {
 
 .tertiary-btn {
   background: var(--gradient-tertiary) !important;
+  color: white !important;
+}
+
+.mati-btn {
+  background: var(--gradient-mati) !important;
   color: white !important;
 }
 
@@ -178,51 +188,4 @@ body {
 
 .tertiary-bg {
   background-color: var(--tertiary-main) !important;
-}
-
-/* Reemplazos de las clases antiguas para compatibilidad */
-.orange-text {
-  color: var(--primary-main) !important;
-}
-
-.green-text {
-  color: var(--tertiary-main) !important;
-}
-
-.orange-bg {
-  background-color: rgba(61, 90, 241, 0.15) !important;
-}
-
-.green-bg {
-  background-color: rgba(34, 202, 172, 0.15) !important;
-}
-
-.orange-glow {
-  box-shadow: 0 10px 30px rgba(61, 90, 241, 0.15);
-}
-
-.green-glow {
-  box-shadow: 0 10px 30px rgba(34, 202, 172, 0.15);
-}
-
-.orange-gradient {
-  background: var(--gradient-primary);
-}
-
-.green-gradient {
-  background: var(--gradient-tertiary);
-}
-
-.gradient-btn {
-  background: var(--gradient-full);
-  color: white !important;
-  height: 48px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  border-radius: 8px;
-}
-
-.gradient-btn:hover {
-  box-shadow: 0 5px 15px rgba(61, 90, 241, 0.4);
-  transform: translateY(-3px);
 }

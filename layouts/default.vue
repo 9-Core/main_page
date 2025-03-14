@@ -4,7 +4,7 @@
     <!-- Navbar con efecto de transparente a sólido al scroll -->
     <v-app-bar
       :elevation="isScrolled ? 4 : 0"
-      :color="isScrolled ? 'rgba(18, 18, 18, 0.9)' : 'transparent'"
+      :color="isScrolled ? 'rgba(19, 21, 37, 0.9)' : 'transparent'"
       fixed
     >
       <v-container class="d-flex align-center px-6">
@@ -176,15 +176,15 @@
               Contacto
             </h3>
             <div class="d-flex align-center mb-3">
-              <v-icon class="me-2 orange-text">mdi-map-marker</v-icon>
+              <v-icon class="me-2 primary-text">mdi-map-marker</v-icon>
               <span class="white-text">123 Calle Principal, Ciudad</span>
             </div>
             <div class="d-flex align-center mb-3">
-              <v-icon class="me-2 orange-text">mdi-phone</v-icon>
+              <v-icon class="me-2 secondary-text">mdi-phone</v-icon>
               <span class="white-text">+1 234 567 890</span>
             </div>
             <div class="d-flex align-center">
-              <v-icon class="me-2 green-text">mdi-email</v-icon>
+              <v-icon class="me-2 tertiary-text">mdi-email</v-icon>
               <span class="white-text">contacto@9core.com</span>
             </div>
           </v-col>
@@ -234,6 +234,7 @@ provide("changePage", changePage);
 const menuItems = [
   { title: "Inicio", page: "INICIO" },
   { title: "Servicios", page: "SERVICIOS" },
+  { title: "Proyectos", page: "PROYECTOS" },
   { title: "Nosotros", page: "NOSOTROS" },
 ];
 
@@ -252,10 +253,10 @@ onMounted(() => {
   window.addEventListener("scroll", handleScroll);
 
   // Forzar tema oscuro
-  document.documentElement.style.setProperty("--v-theme-background", "#121212");
-  document.documentElement.style.setProperty("--v-theme-surface", "#1e1e1e");
-  document.body.style.backgroundColor = "#121212";
-  document.body.style.color = "white";
+  document.documentElement.style.setProperty("--v-theme-background", "#131525");
+  document.documentElement.style.setProperty("--v-theme-surface", "#2D2E3F");
+  document.body.style.backgroundColor = "#131525";
+  document.body.style.color = "#E4E6F5";
 });
 
 onUnmounted(() => {
@@ -266,38 +267,58 @@ onUnmounted(() => {
 <style>
 /* Definición directa de variables para evitar problemas de importación */
 :root {
-  /* Colores primarios del logo */
-  --orange-primary: #ff7e00;
-  --orange-light: #ffb347;
-  --green-primary: #4caf50;
-  --green-light: #8bc34a;
+  /* Colores primarios - Azul */
+  --primary-main: #3d5af1; /* Azul vibrante */
+  --primary-light: #6b7eff;
+  --primary-dark: #2a3dad;
+
+  /* Colores secundarios - Morado */
+  --secondary-main: #7b42f6; /* Morado */
+  --secondary-light: #9e6ffd;
+  --secondary-dark: #5b2acf;
+
+  /* Colores terciarios - Verde */
+  --tertiary-main: #22caac; /* Verde-azulado */
+  --tertiary-light: #4eecd2;
+  --tertiary-dark: #169c83;
+
+  /* Colores neutrales */
+  --neutral-darkest: #1a1b25; /* Casi negro */
+  --neutral-dark: #2d2e3f; /* Fondos oscuros */
+  --neutral-medium: #6c6f8a; /* Textos secundarios */
+  --neutral-light: #e4e6f5; /* Fondos claros */
+  --neutral-lightest: #ffffff; /* Blanco */
 
   /* Colores de fondo */
-  --background-dark: #121212;
-  --background-darker: #0a0a0a;
-  --surface-dark: #1e1e1e;
+  --background-default: #f7f8fc; /* Fondo principal */
+  --background-paper: #ffffff; /* Componentes elevados */
+  --background-dark: #131525; /* Secciones contrastantes */
 
   /* Colores de texto */
   --text-light: #ffffff;
   --text-muted: rgba(255, 255, 255, 0.7);
 
   /* Gradientes */
-  --gradient-orange: linear-gradient(
+  --gradient-primary: linear-gradient(
     135deg,
-    var(--orange-light),
-    var(--orange-primary)
+    var(--primary-light),
+    var(--primary-dark)
   );
-  --gradient-green: linear-gradient(
+  --gradient-secondary: linear-gradient(
     135deg,
-    var(--green-light),
-    var(--green-primary)
+    var(--secondary-light),
+    var(--secondary-dark)
+  );
+  --gradient-tertiary: linear-gradient(
+    135deg,
+    var(--tertiary-light),
+    var(--tertiary-dark)
   );
   --gradient-full: linear-gradient(
     135deg,
-    var(--orange-primary),
-    var(--orange-light),
-    var(--green-light),
-    var(--green-primary)
+    var(--primary-main),
+    var(--secondary-main),
+    var(--tertiary-main)
   );
 }
 
@@ -310,12 +331,16 @@ onUnmounted(() => {
   font-weight: bold;
 }
 
-.orange-text {
-  color: var(--orange-primary) !important;
+.primary-text {
+  color: var(--primary-main) !important;
 }
 
-.green-text {
-  color: var(--green-primary) !important;
+.secondary-text {
+  color: var(--secondary-main) !important;
+}
+
+.tertiary-text {
+  color: var(--tertiary-main) !important;
 }
 
 .white-text {
@@ -353,7 +378,7 @@ onUnmounted(() => {
 }
 
 .menu-btn {
-  color: var(--orange-primary) !important;
+  color: var(--primary-main) !important;
 }
 
 .social-btn {
@@ -370,13 +395,13 @@ onUnmounted(() => {
 
 /* Botones */
 .primary-btn {
-  background: var(--gradient-orange) !important;
+  background: var(--gradient-primary) !important;
   color: white !important;
 }
 
 /* Footer */
 .footer {
-  background-color: var(--background-darker) !important;
+  background-color: var(--neutral-darkest) !important;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
@@ -411,5 +436,16 @@ onUnmounted(() => {
   transition: all 0.3s ease;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+}
+
+/* Main content area styles */
+.main-content {
+  background-color: var(--background-default) !important;
+}
+
+/* Dark sections */
+.dark-section {
+  background-color: var(--background-dark) !important;
+  color: var(--neutral-light) !important;
 }
 </style>

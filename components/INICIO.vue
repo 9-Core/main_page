@@ -37,6 +37,18 @@
 </template>
 
 <script setup>
+const words = [
+  "ore",
+  "alidad",
+  "reatividad",
+  "ompromiso",
+  "laridad",
+  "onfiabilidad",
+  "olaboración",
+  "apacidad",
+  "ompetitividad",
+  "onocimiento",
+];
 // No se requiere lógica adicional para este componente
 </script>
 

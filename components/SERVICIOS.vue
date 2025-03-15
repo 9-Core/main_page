@@ -37,15 +37,11 @@
     <!-- Dialog para mostrar el detalle del servicio -->
     <v-dialog v-model="dialogOpen" max-width="700">
       <v-card v-if="selectedService !== null" class="service-dialog">
-        <v-card-item>
+        <v-card-item class="service-header">
           <div class="d-flex align-center mb-2">
             <v-avatar
               size="64"
-              :class="
-                selectedService % 2 === 0
-                  ? 'primary-gradient'
-                  : 'tertiary-gradient'
-              "
+              :class="getIconGradientClass(selectedService)"
               class="service-avatar me-4"
             >
               <v-icon
@@ -67,33 +63,35 @@
 
           <!-- Tecnologías relacionadas -->
           <div class="technologies-container mb-4">
-            <div class="technologies-header">
-              <h4 class="text-subtitle-1 font-weight-bold technologies-title">
+            <div class="technologies-body">
+              <h4
+                class="text-subtitle-1 font-weight-bold technologies-title mb-4"
+              >
                 Tecnologías relacionadas:
               </h4>
-            </div>
 
-            <div
-              v-if="services[selectedService].techCategories"
-              class="technologies-body"
-            >
               <div
-                v-for="(techs, category) in services[selectedService]
-                  .techCategories"
-                :key="category"
-                class="tech-category mb-4"
+                v-if="services[selectedService].techCategories"
+                class="tech-categories-wrapper"
               >
-                <div class="tech-category-name mb-2">{{ category }}</div>
-                <div class="d-flex flex-wrap">
-                  <v-chip
-                    v-for="(tech, index) in techs"
-                    :key="index"
-                    class="ma-1 tech-chip"
-                    size="small"
-                    label
-                  >
-                    {{ tech }}
-                  </v-chip>
+                <div
+                  v-for="(techs, category) in services[selectedService]
+                    .techCategories"
+                  :key="category"
+                  class="tech-category mb-4"
+                >
+                  <div class="tech-category-name mb-2">{{ category }}</div>
+                  <div class="d-flex flex-wrap">
+                    <v-chip
+                      v-for="(tech, index) in techs"
+                      :key="index"
+                      class="ma-1 tech-chip"
+                      size="small"
+                      label
+                    >
+                      {{ tech }}
+                    </v-chip>
+                  </div>
                 </div>
               </div>
             </div>
@@ -129,6 +127,20 @@ const openServiceDialog = (index) => {
 
 const closeDialog = () => {
   dialogOpen.value = false;
+};
+
+// Función para obtener la clase de gradiente para el icono según el servicio
+const getIconGradientClass = (serviceIndex) => {
+  const gradientClasses = [
+    "blue-purple-gradient", // Gradiente 1: Azul-Morado
+    "purple-pink-gradient", // Gradiente 2: Morado-Rosa
+    "blue-teal-gradient", // Gradiente 3: Azul-Turquesa
+    "purple-blue-gradient", // Gradiente 4: Morado-Azul
+    "indigo-blue-gradient", // Gradiente 5: Índigo-Azul
+  ];
+
+  // Usa el módulo para asegurarte de no exceder el número de gradientes disponibles
+  return gradientClasses[serviceIndex % gradientClasses.length];
 };
 
 // Función para acortar títulos largos en la visualización de iconos
@@ -385,12 +397,25 @@ const services = [
   background-color: var(--neutral-light);
 }
 
-.primary-gradient {
-  background: var(--gradient-primary);
+/* Nuevos gradientes para iconos */
+.blue-purple-gradient {
+  background: linear-gradient(135deg, #2979ff, #5e35b1);
 }
 
-.tertiary-gradient {
-  background: var(--gradient-tertiary);
+.purple-pink-gradient {
+  background: linear-gradient(135deg, #673ab7, #e91e63);
+}
+
+.blue-teal-gradient {
+  background: linear-gradient(135deg, #1976d2, #00897b);
+}
+
+.purple-blue-gradient {
+  background: linear-gradient(135deg, #7b1fa2, #1565c0);
+}
+
+.indigo-blue-gradient {
+  background: linear-gradient(135deg, #3949ab, #0288d1);
 }
 
 .service-logo-container:hover {
@@ -426,6 +451,12 @@ const services = [
   max-height: 90vh;
   display: flex;
   flex-direction: column;
+  background-color: #fff;
+}
+
+.service-header {
+  background-color: #fff;
+  border-bottom: 1px solid rgba(200, 210, 255, 0.1);
 }
 
 .service-dialog-title {
@@ -436,7 +467,7 @@ const services = [
 }
 
 .service-avatar {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 .service-description {
@@ -460,24 +491,21 @@ const services = [
   box-shadow: 0 8px 20px rgba(26, 35, 126, 0.2);
 }
 
-.technologies-header {
-  background: linear-gradient(135deg, #1a237e, #283593);
-  padding: 15px 20px;
-  border-radius: 12px 12px 0 0;
+.technologies-body {
+  background: linear-gradient(135deg, #3949ab, #3f51b5, #5c6bc0, #3f51b5);
+  padding: 20px;
+  max-height: 50vh;
+  overflow-y: auto;
+  border-radius: 12px;
 }
 
 .technologies-title {
   color: white !important;
-  margin-bottom: 0;
   font-weight: 600;
 }
 
-.technologies-body {
-  background: linear-gradient(135deg, #3949ab, #3f51b5);
-  padding: 20px;
-  max-height: 40vh;
-  overflow-y: auto;
-  border-radius: 0 0 12px 12px;
+.tech-categories-wrapper {
+  margin-top: 10px;
 }
 
 /* Estilos para categorías de tecnologías */
@@ -490,11 +518,11 @@ const services = [
 }
 
 .tech-category-name {
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.95);
   font-weight: 600;
   font-size: 0.95rem;
   padding-bottom: 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
   margin-bottom: 10px;
 }
 
@@ -531,7 +559,7 @@ const services = [
   }
 
   .technologies-body {
-    max-height: 50vh;
+    max-height: 60vh;
   }
 }
 </style>

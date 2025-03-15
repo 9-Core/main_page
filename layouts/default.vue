@@ -3,95 +3,73 @@
   <v-app>
     <!-- Navbar con efecto de transparente a sólido al scroll -->
     <v-app-bar
-      :elevation="isScrolled ? 4 : 0"
-      :color="isScrolled ? 'rgba(19, 21, 37, 0.9)' : 'transparent'"
-      fixed
-    >
+  :elevation="isScrolled ? 4 : 0"
+  :style="{
+    backgroundColor: isScrolled
+      ? 'rgba(19, 21, 37, 0.9)'
+      : 'var(--neutra2-light-background)',
+    transition: 'background-color 0.3s ease-in-out'
+  }"
+  fixed
+>
+
       <v-container class="d-flex align-center px-6">
-        <v-img
-          src="/image.png"
-          alt="Logo 9Core"
-          max-width="40"
-          class="me-3"
-        ></v-img>
+        <!-- Logo con icono de desarrollo -->
+        <div class="d-flex align-center">
+          <!-- <v-icon class="mr-2">mdi-code-tags</v-icon> -->
+          <span class="blink-cursor-navbar"> >&nbsp;</span>
+          <span class="core-text-navbar">9CORE</span>
+        </div>
 
         <v-spacer></v-spacer>
 
-        <!-- Menú Desktop con navegación interna -->
+        <!-- Menú Desktop -->
         <div class="d-none d-md-flex align-center">
-          <v-btn
-            v-for="(item, i) in menuItems"
-            :key="i"
-            :class="{ 'nav-active': currentPage === item.page }"
-            variant="text"
-            class="mx-2 nav-link nav-text"
-            @click="changePage(item.page)"
-          >
+          <v-btn v-for="(item, i) in menuItems" :key="i" :class="{ 'nav-active': currentPage === item.page }"
+            variant="text" class="mx-2 nav-link nav-text" @click="changePage(item.page)">
             <span>{{ item.title }}</span>
           </v-btn>
 
-          <!-- Botón de contacto destacado -->
-          <v-btn
-            class="ml-4 primary-btn white-text"
-            @click="changePage('CONTACTO')"
-          >
+          <!-- Botón de contacto -->
+          <v-btn class="ml-4 primary-btn white-text" rounded="xl" elevation="2" @click="changePage('CONTACTO')">
             <v-icon start>mdi-email</v-icon>
             Contactar
           </v-btn>
         </div>
 
-        <!-- Botón de menú móvil -->
+        <!-- Menú móvil -->
         <v-btn icon class="d-flex d-md-none menu-btn" @click="drawer = !drawer">
           <v-icon>{{ drawer ? "mdi-close" : "mdi-menu" }}</v-icon>
         </v-btn>
       </v-container>
+
     </v-app-bar>
 
     <!-- Menú móvil -->
-    <v-navigation-drawer
-      v-model="drawer"
-      temporary
-      location="right"
-      class="drawer-bg pa-4"
-    >
+    <v-navigation-drawer v-model="drawer" temporary location="right" class="drawer-bg pa-4">
       <div class="text-center mb-6">
-        <v-img
-          src="/image.png"
-          alt="Logo"
-          max-width="60"
-          class="mx-auto mb-4"
-        ></v-img>
+        <v-img src="/image.png" alt="Logo" max-width="60" class="mx-auto mb-4"></v-img>
         <div class="text-h6 font-weight-bold core-logo-text">9 Core</div>
       </div>
 
       <v-divider class="mb-4 divider"></v-divider>
 
       <v-list class="transparent-list">
-        <v-list-item
-          v-for="(item, i) in menuItems"
-          :key="i"
-          :active="currentPage === item.page"
-          rounded="lg"
-          class="mb-2"
-          @click="
+        <v-list-item v-for="(item, i) in menuItems" :key="i" :active="currentPage === item.page" rounded="lg"
+          class="mb-2" @click="
             changePage(item.page);
-            drawer = false;
-          "
-        >
+          drawer = false;
+          ">
           <v-list-item-title class="font-weight-medium nav-text">
             {{ item.title }}
           </v-list-item-title>
         </v-list-item>
 
         <v-list-item class="mt-4">
-          <v-btn
-            block
-            class="primary-btn mt-2 white-text"
-            @click="
-              changePage('CONTACTO');
-              drawer = false;
-            "
-          >
+          <v-btn block class="primary-btn mt-2 white-text" @click="
+            changePage('CONTACTO');
+          drawer = false;
+          ">
             <v-icon start>mdi-email</v-icon>
             Contactar
           </v-btn>
@@ -100,14 +78,7 @@
 
       <!-- Social links en menú móvil -->
       <div class="d-flex justify-center gap-2 mt-8">
-        <v-btn
-          v-for="(social, i) in socialLinks"
-          :key="i"
-          :href="social.url"
-          icon
-          variant="text"
-          class="social-btn"
-        >
+        <v-btn v-for="(social, i) in socialLinks" :key="i" :href="social.url" icon variant="text" class="social-btn">
           <v-icon>{{ social.icon }}</v-icon>
         </v-btn>
       </div>
@@ -125,12 +96,7 @@
           <!-- Información de la empresa -->
           <v-col cols="12" md="4" class="white-text">
             <div class="d-flex align-center mb-4">
-              <v-img
-                src="/image.png"
-                alt="Logo"
-                max-width="40"
-                class="me-3"
-              ></v-img>
+              <v-img src="/image.png" alt="Logo" max-width="40" class="me-3"></v-img>
               <h3 class="text-h6 font-weight-bold core-logo-text">9 Core</h3>
             </div>
             <p class="text-body-2 mb-4">
@@ -138,14 +104,8 @@
               innovadoras
             </p>
             <div class="d-flex gap-2">
-              <v-btn
-                v-for="(social, i) in socialLinks"
-                :key="i"
-                :href="social.url"
-                icon
-                variant="text"
-                class="social-btn"
-              >
+              <v-btn v-for="(social, i) in socialLinks" :key="i" :href="social.url" icon variant="text"
+                class="social-btn">
                 <v-icon>{{ social.icon }}</v-icon>
               </v-btn>
             </div>
@@ -157,13 +117,8 @@
               Links Rápidos
             </h3>
             <v-list class="footer-list">
-              <v-list-item
-                v-for="(item, i) in menuItems"
-                :key="i"
-                class="pa-0 mb-2"
-                @click="changePage(item.page)"
-                style="cursor: pointer"
-              >
+              <v-list-item v-for="(item, i) in menuItems" :key="i" class="pa-0 mb-2" @click="changePage(item.page)"
+                style="cursor: pointer">
                 <v-list-item-title class="white-text">
                   {{ item.title }}
                 </v-list-item-title>
@@ -268,58 +223,62 @@ onUnmounted(() => {
 /* Definición directa de variables para evitar problemas de importación */
 :root {
   /* Colores primarios - Azul */
-  --primary-main: #3d5af1; /* Azul vibrante */
+  --primary-main: #3d5af1;
+  /* Azul vibrante */
   --primary-light: #6b7eff;
   --primary-dark: #2a3dad;
 
   /* Colores secundarios - Morado */
-  --secondary-main: #7b42f6; /* Morado */
+  --secondary-main: #7b42f6;
+  /* Morado */
   --secondary-light: #9e6ffd;
   --secondary-dark: #5b2acf;
 
   /* Colores terciarios - Verde */
-  --tertiary-main: #22caac; /* Verde-azulado */
+  --tertiary-main: #22caac;
+  /* Verde-azulado */
   --tertiary-light: #4eecd2;
   --tertiary-dark: #169c83;
 
   /* Colores neutrales */
-  --neutral-darkest: #1a1b25; /* Casi negro */
-  --neutral-dark: #2d2e3f; /* Fondos oscuros */
-  --neutral-medium: #6c6f8a; /* Textos secundarios */
-  --neutral-light: #e4e6f5; /* Fondos claros */
-  --neutral-lightest: #ffffff; /* Blanco */
+  --neutral-darkest: #1a1b25;
+  /* Casi negro */
+  --neutral-dark: #2d2e3f;
+  /* Fondos oscuros */
+  --neutral-medium: #6c6f8a;
+  /* Textos secundarios */
+  --neutral-light: #e4e6f5;
+  --neutra2-light-background: #ebedf1;
+  /* Fondos claros */
+  --neutral-lightest: #ffffff;
+  /* Blanco */
 
   /* Colores de fondo */
-  --background-default: #f7f8fc; /* Fondo principal */
-  --background-paper: #ffffff; /* Componentes elevados */
-  --background-dark: #131525; /* Secciones contrastantes */
+  --background-default: #f7f8fc;
+  /* Fondo principal */
+  --background-paper: #ffffff;
+  /* Componentes elevados */
+  --background-dark: #131525;
+  /* Secciones contrastantes */
 
   /* Colores de texto */
   --text-light: #ffffff;
   --text-muted: rgba(255, 255, 255, 0.7);
 
   /* Gradientes */
-  --gradient-primary: linear-gradient(
-    135deg,
-    var(--primary-light),
-    var(--primary-dark)
-  );
-  --gradient-secondary: linear-gradient(
-    135deg,
-    var(--secondary-light),
-    var(--secondary-dark)
-  );
-  --gradient-tertiary: linear-gradient(
-    135deg,
-    var(--tertiary-light),
-    var(--tertiary-dark)
-  );
-  --gradient-full: linear-gradient(
-    135deg,
-    var(--primary-main),
-    var(--secondary-main),
-    var(--tertiary-main)
-  );
+  --gradient-primary: linear-gradient(135deg,
+      var(--primary-light),
+      var(--primary-dark));
+  --gradient-secondary: linear-gradient(135deg,
+      var(--secondary-light),
+      var(--secondary-dark));
+  --gradient-tertiary: linear-gradient(135deg,
+      var(--tertiary-light),
+      var(--tertiary-dark));
+  --gradient-full: linear-gradient(135deg,
+      var(--primary-main),
+      var(--secondary-main),
+      var(--tertiary-main));
 }
 
 /* Estilos específicos para el layout */
@@ -330,6 +289,36 @@ onUnmounted(() => {
   color: transparent !important;
   font-weight: bold;
 }
+
+.core-text-navbar {
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.1em;
+  font-weight: 900;
+  font-size: 30px;
+  color: var(--primary-light);
+  position: relative;
+}
+
+.blink-cursor-navbar {
+  color: var(--primary-light);
+  font-weight: bold;
+  margin-left: 5px;
+  font-size: 30px;
+  animation: blink 1.2s infinite;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
 
 .primary-text {
   color: var(--primary-main) !important;

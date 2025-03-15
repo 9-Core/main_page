@@ -138,6 +138,8 @@ onBeforeUnmount(() => {
   font-weight: bold;
   margin-left: 5px;
   display: inline-block;
+  position: relative;
+  top: -2px; /* Ajuste para subir ligeramente la barra vertical */
   animation: cursor-blink 1s step-end infinite;
 }
 
@@ -165,11 +167,7 @@ onBeforeUnmount(() => {
 }
 
 .hero-logo {
-  transition: all 0.8s ease;
-}
-
-.hero-logo:hover {
-  transform: rotate(10deg) scale(1.05);
+  transition: all 0.3s ease;
 }
 
 .gradient-btn {

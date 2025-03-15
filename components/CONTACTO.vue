@@ -299,7 +299,7 @@ const submitForm = async () => {
 </script>
 
 <style scoped>
-/* Estilos específicos para la sección de contacto */
+/* Estilos específicos para la sección de contacto sas*/
 .contact-section {
   background-color: #121212;
   position: relative;

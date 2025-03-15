@@ -5,15 +5,16 @@
       <v-col cols="12" class="text-center">
         <div class="logo-container mb-12">
           <v-img
-            src="/logo.png"
+            src="/image.png"
             max-width="300"
             class="mx-auto hero-logo"
             alt="9-CORE Logo"
           ></v-img>
         </div>
 
-        <h1 class="text-h2 font-weight-bold mb-8 company-name primary-text">
-          CORE<span class="vertical-bar">|</span>
+        <h1 class="text-h2 font-weight-bold mb-8 company-name">
+          <span class="logo-9">C{{ displayText }}</span
+          ><span class="vertical-bar">|</span>
         </h1>
 
         <p class="text-h5 mb-12 hero-tagline">
@@ -37,6 +38,8 @@
 </template>
 
 <script setup>
+import { ref, onMounted, onBeforeUnmount } from "vue";
+
 const words = [
   "ore",
   "alidad",
@@ -49,7 +52,59 @@ const words = [
   "ompetitividad",
   "onocimiento",
 ];
-// No se requiere lógica adicional para este componente
+
+const displayText = ref("ore");
+let currentWordIndex = 0;
+let isDeleting = false;
+let typingSpeed = 150; // velocidad base de escritura en ms
+let timer = null;
+
+// Función para animar el texto con efecto de escritura
+const typeEffect = () => {
+  // Palabra actual que se debe mostrar
+  const fullWord = words[currentWordIndex];
+
+  // Si está borrando, eliminar un carácter
+  if (isDeleting) {
+    displayText.value = fullWord.substring(0, displayText.value.length - 1);
+  } else {
+    // Si está escribiendo, agregar un carácter
+    displayText.value = fullWord.substring(0, displayText.value.length + 1);
+  }
+
+  // Ajustar la velocidad de escritura
+  if (isDeleting) {
+    typingSpeed = 80; // más rápido al borrar
+  } else {
+    typingSpeed = 150; // más lento al escribir
+  }
+
+  // Si completó la palabra
+  if (!isDeleting && displayText.value === fullWord) {
+    typingSpeed = 2000; // pausa antes de empezar a borrar
+    isDeleting = true;
+  }
+
+  // Si terminó de borrar
+  if (isDeleting && displayText.value === "") {
+    isDeleting = false;
+    currentWordIndex = (currentWordIndex + 1) % words.length;
+    typingSpeed = 500; // pausa antes de empezar la siguiente palabra
+  }
+
+  // Continuar la animación
+  timer = setTimeout(typeEffect, typingSpeed);
+};
+
+onMounted(() => {
+  // Iniciar el efecto de escritura cuando el componente se monta
+  timer = setTimeout(typeEffect, 1000); // Esperar 1 segundo antes de empezar
+});
+
+onBeforeUnmount(() => {
+  // Limpiar el temporizador cuando el componente se desmonta
+  clearTimeout(timer);
+});
 </script>
 
 <style scoped>
@@ -64,12 +119,36 @@ const words = [
   font-size: 4rem !important;
   position: relative;
   display: inline-block;
+  color: var(--neutral-darkest);
+}
+
+.logo-9 {
+  color: var(--primary-main);
+  font-weight: bold;
+}
+
+.typing-text {
+  display: inline-block;
+  min-width: 10ch; /* ancho mínimo para evitar saltos de diseño */
+  text-align: left;
 }
 
 .vertical-bar {
   color: var(--primary-main);
   font-weight: bold;
   margin-left: 5px;
+  display: inline-block;
+  animation: cursor-blink 1s step-end infinite;
+}
+
+@keyframes cursor-blink {
+  from,
+  to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 .hero-tagline {
@@ -130,6 +209,10 @@ const words = [
 @media (max-width: 600px) {
   .company-name {
     font-size: 3rem !important;
+  }
+
+  .typing-text {
+    min-width: 8ch;
   }
 
   .hero-tagline {

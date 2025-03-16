@@ -234,7 +234,6 @@ provide("changePage", changePage);
 const menuItems = [
   { title: "Inicio", page: "INICIO" },
   { title: "Servicios", page: "SERVICIOS" },
-  { title: "Proyectos", page: "PROYECTOS" },
   { title: "Nosotros", page: "NOSOTROS" },
 ];
 

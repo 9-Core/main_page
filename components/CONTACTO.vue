@@ -1,7 +1,7 @@
 <template>
   <v-container fluid class="contact-section py-16">
     <v-container>
-      <v-row class="mb-12">
+      <!-- <v-row class="mb-12">
         <v-col cols="12" class="text-center">
           <span class="overline text-gradient d-block mb-2">CONTÁCTANOS</span>
           <h2 class="text-h3 mb-4 font-weight-black"><span class="text-gradient">Contacto</span></h2>
@@ -10,7 +10,7 @@
             Estamos listos para impulsar tu próximo proyecto
           </p>
         </v-col>
-      </v-row>
+      </v-row> -->
 
       <v-row class="d-flex justify-center">
         <!-- Información de contacto - Izquierda -->

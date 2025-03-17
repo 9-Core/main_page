@@ -4,7 +4,7 @@
     <div class="about-bg-pattern"></div>
     
     <v-container>
-      <v-row class="mb-16">
+      <!-- <v-row class="mb-16">
         <v-col cols="12" class="text-center">
           <span class="overline text-gradient d-block mb-2">QUIÉNES SOMOS</span>
           <h2 class="text-h3 mb-4"><span class="text-gradient">Sobre Nosotros</span></h2>
@@ -13,7 +13,7 @@
             Un equipo apasionado por transformar el futuro digital
           </p>
         </v-col>
-      </v-row>
+      </v-row> -->
 
       <!-- Sección principal - Resumen y Stats -->
       <v-row>

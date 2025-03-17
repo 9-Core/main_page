@@ -125,6 +125,47 @@ onBeforeUnmount(() => {
 });
 </script>
 
+
+<script>
+export default {
+  data() {
+    return {
+      words: ['CORE', 'COMPROMISO', 'CONTROL', 'CREATIVIDAD', 'CONFIANZA', 'COMUNIDAD', 'CONEXIÓN', 'CLOUD', 'CAPACITACIÓN', 'COMUNICACIÓN', 'CULTURA', 'CIBERSEGURIDAD', 'CLOUD', 'CÓDIGO', 'CONECTIVIDAD', 'CUMPLIMIENTO', 'COSTOS'],
+      currentWord: '', // Palabra completa
+      displayedWord: '', // Parte mostrada
+      wordIndex: 0,
+      typingSpeed: 150, // Velocidad de tipeo (en milisegundos)
+      deletingSpeed: 75, // Velocidad de borrado
+    };
+  },
+  mounted() {
+    this.typeWord(); // Inicia el efecto de tipeo al montar el componente
+  },
+  methods: {
+    async typeWord() {
+      this.currentWord = this.words[this.wordIndex];
+      for (let i = 0; i <= this.currentWord.length; i++) {
+        this.displayedWord = this.currentWord.substring(0, i);
+        await this.delay(this.typingSpeed);
+      }
+      await this.delay(1000); // Espera un segundo antes de borrar
+      this.deleteWord();
+    },
+    async deleteWord() {
+      for (let i = this.currentWord.length; i >= 0; i--) {
+        this.displayedWord = this.currentWord.substring(0, i);
+        await this.delay(this.deletingSpeed);
+      }
+      this.wordIndex = (this.wordIndex + 1) % this.words.length; // Siguiente palabra
+      this.typeWord(); // Inicia el tipeo de la siguiente palabra
+    },
+    delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    },
+  },
+};
+</script>
+
 <style scoped>
 .hero-minimal {
   position: relative;

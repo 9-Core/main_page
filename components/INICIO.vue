@@ -16,7 +16,7 @@
 
         <h1 class="text-h1 font-weight-black mb-6 glow-text">
           
-          <span class="core-text">C{{ displayText }} <span class="blink-cursor">|</span></span>
+          <span class="core-text">C{{ displayText }}<span class="blink-cursor">|</span></span>
           
         </h1>
 

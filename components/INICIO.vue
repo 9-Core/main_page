@@ -1,44 +1,62 @@
 <!-- components/HeroMinimal.vue -->
 <template>
   <v-container fluid class="hero-minimal pa-0">
+    <div class="animated-bg"></div>
+    
     <v-row class="align-center justify-center ma-0" style="min-height: 100vh">
-      <v-col cols="12" class="text-center">
-        <div class="logo-container mb-12">
+      <v-col cols="12" md="10" lg="8" class="text-center">
+        <div class="logo-animation mb-8">
           <v-img
-            src="/image.png"
-            max-width="300"
+            src="/logo.png"
+            max-width="330"
             class="mx-auto hero-logo"
             alt="9-CORE Logo"
           ></v-img>
         </div>
 
-        <h1 class="text-h2 font-weight-bold mb-8 company-name">
-          <span class="logo-9">C{{ displayText }}</span
-          ><span class="vertical-bar">|</span>
+        <h1 class="text-h1 font-weight-black mb-6 glow-text">
+          
+          <span class="core-text">C{{ displayText }}<span class="blink-cursor">|</span></span>
+          
         </h1>
 
-        <p class="text-h5 mb-12 hero-tagline">
-          Nuestro compromiso es ofrecer soluciones innovadoras
+        <p class="text-h5 mb-12 hero-tagline slide-up-fade">
+          Transformamos ideas en <span class="highlight-text">realidad digital</span>
         </p>
 
-        <v-btn
-          size="x-large"
-          class="gradient-btn px-8 py-3"
-          min-width="200"
-          rounded="pill"
-        >
-          CONÓCENOS
-        </v-btn>
+        <div class="button-group slide-up-fade">
+          <v-btn
+            size="x-large"
+            class="gradient-btn px-8 py-3 me-4"
+            min-width="200"
+            rounded="xl"
+            elevation="8"
+          >
+            CONÓCENOS
+            <v-icon end>mdi-arrow-right</v-icon>
+          </v-btn>
+          
+          <v-btn
+            size="x-large"
+            variant="outlined"
+            class="outline-btn px-8 py-3"
+            min-width="200"
+            rounded="xl"
+          >
+            SERVICIOS
+          </v-btn>
+        </div>
+        
+        <div class="scroll-indicator mt-16">
+          <v-icon class="scroll-icon pulse">mdi-chevron-down</v-icon>
+        </div>
       </v-col>
     </v-row>
-
-    <!-- Degradado de fondo sutil -->
-    <div class="background-overlay"></div>
   </v-container>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 const words = [
   "ore",
@@ -107,50 +125,123 @@ onBeforeUnmount(() => {
 });
 </script>
 
+
+<script>
+export default {
+  data() {
+    return {
+      words: ['CORE', 'COMPROMISO', 'CONTROL', 'CREATIVIDAD', 'CONFIANZA', 'COMUNIDAD', 'CONEXIÓN', 'CLOUD', 'CAPACITACIÓN', 'COMUNICACIÓN', 'CULTURA', 'CIBERSEGURIDAD', 'CLOUD', 'CÓDIGO', 'CONECTIVIDAD', 'CUMPLIMIENTO', 'COSTOS'],
+      currentWord: '', // Palabra completa
+      displayedWord: '', // Parte mostrada
+      wordIndex: 0,
+      typingSpeed: 150, // Velocidad de tipeo (en milisegundos)
+      deletingSpeed: 75, // Velocidad de borrado
+    };
+  },
+  mounted() {
+    this.typeWord(); // Inicia el efecto de tipeo al montar el componente
+  },
+  methods: {
+    async typeWord() {
+      this.currentWord = this.words[this.wordIndex];
+      for (let i = 0; i <= this.currentWord.length; i++) {
+        this.displayedWord = this.currentWord.substring(0, i);
+        await this.delay(this.typingSpeed);
+      }
+      await this.delay(1000); // Espera un segundo antes de borrar
+      this.deleteWord();
+    },
+    async deleteWord() {
+      for (let i = this.currentWord.length; i >= 0; i--) {
+        this.displayedWord = this.currentWord.substring(0, i);
+        await this.delay(this.deletingSpeed);
+      }
+      this.wordIndex = (this.wordIndex + 1) % this.words.length; // Siguiente palabra
+      this.typeWord(); // Inicia el tipeo de la siguiente palabra
+    },
+    delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    },
+  },
+};
+</script>
+
 <style scoped>
 .hero-minimal {
   position: relative;
-  background-color: var(--neutral-light);
+  background-color: var(--neutral-darkest);
+  /* background: linear-gradient(135deg, #131525 0%, #2A3DAD 100%); */
   overflow: hidden;
+  z-index: 1;
 }
 
-.company-name {
-  letter-spacing: 2px;
-  font-size: 4rem !important;
+.animated-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.15), transparent 70%),
+    radial-gradient(circle at 80% 70%, rgba(16, 185, 129, 0.1), transparent 70%);
+  z-index: -1;
+  animation: pulse-bg 10s infinite alternate;
+}
+
+@keyframes pulse-bg {
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+}
+
+.logo-animation {
   position: relative;
-  display: inline-block;
-  color: var(--neutral-darkest);
+  z-index: 2;
+  animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+.hero-logo {
+  transition: all 0.8s ease;
+  filter: drop-shadow(0 0 10px rgba(79, 70, 229, 0.3));
 }
 
 .logo-9 {
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.1em;
+  font-weight: 900;
   color: var(--primary-main);
-  font-weight: bold;
+  position: relative;
 }
 
-.typing-text {
+.core-text {
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.1em;
+  font-weight: 900;
+  color: var(--neutral-light);
+  position: relative;
   display: inline-block;
   min-width: 10ch; /* ancho mínimo para evitar saltos de diseño */
-  text-align: left;
 }
 
-.vertical-bar {
+.blink-cursor {
   color: var(--primary-main);
   font-weight: bold;
-  margin-left: 5px;
-  display: inline-block;
-  position: relative;
-  top: -2px; /* Ajuste para subir ligeramente la barra vertical */
-  animation: cursor-blink 1s step-end infinite;
+  animation: blink 1.2s infinite;
 }
 
-@keyframes cursor-blink {
-  from,
-  to {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0;
-  }
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .hero-tagline {
@@ -158,55 +249,127 @@ onBeforeUnmount(() => {
   max-width: 700px;
   margin-left: auto;
   margin-right: auto;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+}
+
+.highlight-text {
+  color: var(--neutral-light);
   font-weight: 400;
 }
 
-.logo-container {
-  position: relative;
-  z-index: 2;
-}
-
-.hero-logo {
-  transition: all 0.3s ease;
+.glow-text {
+  text-shadow: 0 0 20px rgba(79, 70, 229, 0.2);
 }
 
 .gradient-btn {
   background: var(--gradient-full);
   color: white !important;
   letter-spacing: 1px;
-  font-weight: 500;
+  font-weight: 700;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(61, 90, 241, 0.25);
+  box-shadow: 0 4px 20px rgba(79, 70, 229, 0.3);
+  text-transform: none;
+  position: relative;
+  overflow: hidden;
+}
+
+.gradient-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.gradient-btn:hover::after {
+  transform: translateX(100%);
 }
 
 .gradient-btn:hover {
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(61, 90, 241, 0.35);
+  box-shadow: 0 8px 30px rgba(79, 70, 229, 0.5);
 }
 
-.background-overlay {
+.outline-btn {
+  border: 2px solid var(--primary-light) !important;
+  color: var(--primary-light) !important;
+  letter-spacing: 1px;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  text-transform: none;
+}
+
+.outline-btn:hover {
+  background-color: rgba(79, 70, 229, 0.1) !important;
+  transform: translateY(-3px);
+}
+
+.scroll-indicator {
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(
-      circle at 30% 70%,
-      rgba(var(--primary-main-rgb), 0.05),
-      transparent 60%
-    ),
-    radial-gradient(
-      circle at 70% 30%,
-      rgba(var(--tertiary-main-rgb), 0.05),
-      transparent 60%
-    );
-  z-index: 1;
-  pointer-events: none;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.scroll-icon {
+  color: var(--primary-light);
+  font-size: 32px;
+}
+
+.pulse {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(10px);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-up-fade {
+  animation: slideUpFade 1s ease-out forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+@keyframes slideUpFade {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.button-group {
+  animation: slideUpFade 1s ease-out 0.3s forwards;
+  opacity: 0;
+  transform: translateY(20px);
 }
 
 @media (max-width: 600px) {
-  .company-name {
-    font-size: 3rem !important;
+  h1 {
+    font-size: 2.5rem !important;
+  }
+
+  .core-text {
+    min-width: 8ch;
+  }
+
+  .typing-text {
+    min-width: 8ch;
   }
 
   .typing-text {
@@ -214,8 +377,19 @@ onBeforeUnmount(() => {
   }
 
   .hero-tagline {
-    font-size: 1.25rem !important;
+    font-size: 1.1rem !important;
     padding: 0 16px;
+  }
+  
+  .button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .gradient-btn, .outline-btn {
+    width: 100%;
+    margin: 8px 0;
   }
 }
 </style>

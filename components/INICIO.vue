@@ -7,21 +7,21 @@
       <v-col cols="12" md="10" lg="8" class="text-center">
         <div class="logo-animation mb-8">
           <v-img
-            src="../public/image.png"
-            max-width="180"
+            src="/logo.png"
+            max-width="330"
             class="mx-auto hero-logo"
             alt="9-CORE Logo"
           ></v-img>
         </div>
 
         <h1 class="text-h1 font-weight-black mb-6 glow-text">
-          <span class="core-text">9</span>
-          <span class="core-text">CORE</span>
-          <span class="blink-cursor">|</span>
+          
+          <span class="core-text">C{{ displayText }} <span class="blink-cursor">|</span></span>
+          
         </h1>
 
         <p class="text-h5 mb-12 hero-tagline slide-up-fade">
-          Transformamos ideas en <span class="typewriter">realidad digital</span>
+          Transformamos ideas en <span class="highlight-text">realidad digital</span>
         </p>
 
         <div class="button-group slide-up-fade">
@@ -56,9 +56,73 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 
-// No se requiere lógica adicional para este componente
+const words = [
+  "ore",
+  "alidad",
+  "reatividad",
+  "ompromiso",
+  "laridad",
+  "onfiabilidad",
+  "olaboración",
+  "apacidad",
+  "ompetitividad",
+  "onocimiento",
+];
+
+const displayText = ref("ore");
+let currentWordIndex = 0;
+let isDeleting = false;
+let typingSpeed = 150; // velocidad base de escritura en ms
+let timer = null;
+
+// Función para animar el texto con efecto de escritura
+const typeEffect = () => {
+  // Palabra actual que se debe mostrar
+  const fullWord = words[currentWordIndex];
+
+  // Si está borrando, eliminar un carácter
+  if (isDeleting) {
+    displayText.value = fullWord.substring(0, displayText.value.length - 1);
+  } else {
+    // Si está escribiendo, agregar un carácter
+    displayText.value = fullWord.substring(0, displayText.value.length + 1);
+  }
+
+  // Ajustar la velocidad de escritura
+  if (isDeleting) {
+    typingSpeed = 80; // más rápido al borrar
+  } else {
+    typingSpeed = 150; // más lento al escribir
+  }
+
+  // Si completó la palabra
+  if (!isDeleting && displayText.value === fullWord) {
+    typingSpeed = 2000; // pausa antes de empezar a borrar
+    isDeleting = true;
+  }
+
+  // Si terminó de borrar
+  if (isDeleting && displayText.value === "") {
+    isDeleting = false;
+    currentWordIndex = (currentWordIndex + 1) % words.length;
+    typingSpeed = 500; // pausa antes de empezar la siguiente palabra
+  }
+
+  // Continuar la animación
+  timer = setTimeout(typeEffect, typingSpeed);
+};
+
+onMounted(() => {
+  // Iniciar el efecto de escritura cuando el componente se monta
+  timer = setTimeout(typeEffect, 1000); // Esperar 1 segundo antes de empezar
+});
+
+onBeforeUnmount(() => {
+  // Limpiar el temporizador cuando el componente se desmonta
+  clearTimeout(timer);
+});
 </script>
 
 <style scoped>
@@ -109,18 +173,27 @@ import { ref, onMounted } from 'vue';
   filter: drop-shadow(0 0 10px rgba(79, 70, 229, 0.3));
 }
 
+.logo-9 {
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.1em;
+  font-weight: 900;
+  color: var(--primary-main);
+  position: relative;
+}
+
 .core-text {
   font-family: 'Inter', sans-serif;
   letter-spacing: 0.1em;
   font-weight: 900;
   color: var(--neutral-light);
   position: relative;
+  display: inline-block;
+  min-width: 10ch; /* ancho mínimo para evitar saltos de diseño */
 }
 
 .blink-cursor {
   color: var(--primary-main);
   font-weight: bold;
-  margin-left: 5px;
   animation: blink 1.2s infinite;
 }
 
@@ -138,16 +211,9 @@ import { ref, onMounted } from 'vue';
   letter-spacing: 0.5px;
 }
 
-.typewriter {
+.highlight-text {
   color: var(--neutral-light);
-  /* border-right: 3px solid var(--primary-main);
-  padding-right: 5px;
-  animation: typing 3.5s steps(40) infinite; */
-}
-
-@keyframes typing {
-  0%, 100% { width: 0; }
-  50% { width: 100%; }
+  font-weight: 400;
 }
 
 .glow-text {
@@ -254,6 +320,10 @@ import { ref, onMounted } from 'vue';
 @media (max-width: 600px) {
   h1 {
     font-size: 2.5rem !important;
+  }
+
+  .core-text {
+    min-width: 8ch;
   }
 
   .hero-tagline {

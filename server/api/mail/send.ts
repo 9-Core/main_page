@@ -32,14 +32,14 @@ export default defineEventHandler(async (event) => {
       port: 587,
       secure: false, // true para puerto 465, false para otros puertos
       auth: {
-        user: "tucorreo@gmail.com", // Reemplaza con tu usuario SMTP
-        pass: "tupassword", // Reemplaza con tu contraseña SMTP
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASSWORD
       },
     });
 
     // Opciones del correo
     const mailOptions = {
-      from: from || "Sitio Web 9core <tucorreo@gmail.com>",
+      from: from || "Sitio Web 9core noreplyoso.o7@gmail.com",
       to,
       subject,
       text,

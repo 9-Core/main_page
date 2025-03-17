@@ -44,7 +44,7 @@ onMounted(() => {
 <style>
 /* Estilos globales para la página de inicio */
 .index-page {
-  background-color: #121212 !important;
+  background-color: #ffffff !important;
   color: white;
 }
 

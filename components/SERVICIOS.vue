@@ -37,15 +37,11 @@
     <!-- Dialog para mostrar el detalle del servicio -->
     <v-dialog v-model="dialogOpen" max-width="700">
       <v-card v-if="selectedService !== null" class="service-dialog">
-        <v-card-item>
+        <v-card-item class="service-header">
           <div class="d-flex align-center mb-2">
             <v-avatar
               size="64"
-              :class="
-                selectedService % 2 === 0
-                  ? 'primary-gradient'
-                  : 'tertiary-gradient'
-              "
+              :class="getIconGradientClass(selectedService)"
               class="service-avatar me-4"
             >
               <v-icon
@@ -66,25 +62,38 @@
           </p>
 
           <!-- Tecnologías relacionadas -->
-          <div class="technologies-section mb-4">
-            <h4 class="text-subtitle-1 font-weight-bold mb-3">
-              Tecnologías relacionadas:
-            </h4>
-            <div class="d-flex flex-wrap gap-2">
-              <v-chip
-                v-for="(tech, index) in services[selectedService].technologies"
-                :key="index"
-                :color="
-                  selectedService % 2 === 0
-                    ? 'var(--primary-light)'
-                    : 'var(--tertiary-light)'
-                "
-                class="ma-1 tech-chip"
-                size="small"
-                label
+          <div class="technologies-container mb-4">
+            <div class="technologies-body">
+              <h4
+                class="text-subtitle-1 font-weight-bold technologies-title mb-4"
               >
-                {{ tech }}
-              </v-chip>
+                Tecnologías relacionadas:
+              </h4>
+
+              <div
+                v-if="services[selectedService].techCategories"
+                class="tech-categories-wrapper"
+              >
+                <div
+                  v-for="(techs, category) in services[selectedService]
+                    .techCategories"
+                  :key="category"
+                  class="tech-category mb-4"
+                >
+                  <div class="tech-category-name mb-2">{{ category }}</div>
+                  <div class="d-flex flex-wrap">
+                    <v-chip
+                      v-for="(tech, index) in techs"
+                      :key="index"
+                      class="ma-1 tech-chip"
+                      size="small"
+                      label
+                    >
+                      {{ tech }}
+                    </v-chip>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </v-card-text>
@@ -95,8 +104,9 @@
             color="var(--neutral-medium)"
             variant="text"
             @click="closeDialog"
+            class="close-btn"
           >
-            Cerrar
+            CERRAR
           </v-btn>
         </v-card-actions>
       </v-card>
@@ -119,6 +129,20 @@ const closeDialog = () => {
   dialogOpen.value = false;
 };
 
+// Función para obtener la clase de gradiente para el icono según el servicio
+const getIconGradientClass = (serviceIndex) => {
+  const gradientClasses = [
+    "blue-purple-gradient", // Gradiente 1: Azul-Morado
+    "purple-pink-gradient", // Gradiente 2: Morado-Rosa
+    "blue-teal-gradient", // Gradiente 3: Azul-Turquesa
+    "purple-blue-gradient", // Gradiente 4: Morado-Azul
+    "indigo-blue-gradient", // Gradiente 5: Índigo-Azul
+  ];
+
+  // Usa el módulo para asegurarte de no exceder el número de gradientes disponibles
+  return gradientClasses[serviceIndex % gradientClasses.length];
+};
+
 // Función para acortar títulos largos en la visualización de iconos
 const getShortTitle = (title) => {
   const words = title.split(" ");
@@ -132,174 +156,191 @@ const services = [
     title: "Automatización y Optimización de Procesos",
     description:
       "Mejoramos la eficiencia operativa mediante la automatización de flujos de trabajo y optimización de procesos empresariales clave.",
-    technologies: [
-      "RPA",
-      "Python",
-      "UiPath",
-      "Power Automate",
-      "Zapier",
-      "Integromat",
-    ],
+    techCategories: {
+      "Herramientas de Automatización": [
+        "UiPath",
+        "Power Automate",
+        "Pentaho",
+        "SSIS/SSDT",
+        "Scheduler",
+      ],
+      "Lenguajes de Programación": ["Python", ".NET Core", "C#"],
+      "Testing y QA": ["Selenium", "Playwright"],
+      "Integración/ETL": ["SSIS/SSDT", "Pentaho"],
+    },
   },
   {
     icon: "mdi-code-braces",
     title: "Desarrollo de Sistemas y Software",
     description:
       "Creamos sistemas y aplicaciones personalizadas utilizando tecnologías modernas e innovadoras que se adaptan a tus necesidades específicas.",
-    technologies: [
-      "JavaScript",
-      "Python",
-      "React",
-      "Vue.js",
-      "Node.js",
-      "TypeScript",
-      "Java",
-      "C#",
-    ],
+    techCategories: {
+      "Lenguajes de Programación": [
+        "JavaScript",
+        "Python",
+        "C#",
+        ".NET Core",
+        "Java",
+        "Swift",
+      ],
+      "Frameworks Frontend": [
+        "React.js",
+        "Vue.js",
+        "Angular",
+        "Next.js",
+        "Nuxt",
+      ],
+      "Frameworks Backend": [
+        "Spring Boot",
+        "Django",
+        "Quarkus",
+        ".NET Core",
+        "Node.js",
+      ],
+      "UI Frameworks": ["WPF", "MAUI"],
+      Versionamiento: ["GitHub", "GitLab", "Bitbucket", "Git"],
+    },
   },
   {
     icon: "mdi-account-group",
     title: "Outsourcing",
     description:
       "Proporcionamos servicios de externalización de TI de alta calidad, permitiéndote enfocarte en tu negocio principal mientras gestionamos tu infraestructura tecnológica.",
-    technologies: [
-      "Gestión de Proyectos",
-      "ITIL",
-      "DevOps",
-      "Help Desk",
-      "Service Desk",
-    ],
+    techCategories: {
+      "Gestión de Proyectos": [
+        "Jira",
+        "Microsoft Project",
+        "Trello",
+        "Azure DevOps",
+      ],
+      Metodologías: ["ITIL", "Scrum", "Kanban", "DevOps"],
+      Soporte: ["Help Desk", "Service Desk"],
+      Infraestructura: ["Windows Server", "Azure", "GCP", "AWS"],
+    },
   },
   {
     icon: "mdi-cloud",
     title: "Cloud Solutions",
     description:
       "Implementamos y gestionamos infraestructuras cloud escalables, seguras y rentables para optimizar tus operaciones digitales.",
-    technologies: [
-      "AWS",
-      "Azure",
-      "Google Cloud",
-      "Docker",
-      "Kubernetes",
-      "Terraform",
-      "CloudFormation",
-    ],
+    techCategories: {
+      "Proveedores Cloud": ["Azure", "GCP (Google Cloud Platform)", "AWS"],
+      "Infraestructura como Código": ["Terraform", "YAML"],
+      Containers: ["Docker", "Kubernetes"],
+      "Servicios Cloud": [
+        "Azure Functions",
+        "Google Cloud Functions",
+        "Lambda",
+      ],
+      "Bases de Datos Cloud": ["CosmosDB", "BigQuery", "DynamoDB"],
+    },
   },
   {
     icon: "mdi-cogs",
     title: "Servicios TI",
     description:
       "Ofrecemos una gama completa de servicios de tecnología de la información, desde soporte técnico hasta planificación estratégica.",
-    technologies: [
-      "ITIL",
-      "COBIT",
-      "Help Desk",
-      "Service Desk",
-      "Monitoreo",
-      "NOC",
-      "SOC",
-    ],
+    techCategories: {
+      Metodologías: ["ITIL", "COBIT"],
+      Soporte: ["Help Desk", "Service Desk"],
+      Monitoreo: ["Nagios", "Zabbix", "Prometheus", "Grafana"],
+      "Centros de Operaciones": ["NOC", "SOC"],
+      Hosting: ["Windows Server IIS", "Azure", "GCP"],
+    },
   },
   {
     icon: "mdi-robot",
     title: "Soluciones con IA",
     description:
       "Integramos inteligencia artificial en tus procesos para mejorar la toma de decisiones, automatizar tareas repetitivas y descubrir nuevas oportunidades.",
-    technologies: [
-      "Machine Learning",
-      "Deep Learning",
-      "NLP",
-      "Computer Vision",
-      "TensorFlow",
-      "PyTorch",
-      "OpenAI",
-    ],
+    techCategories: {
+      "Machine Learning": ["TensorFlow", "PyTorch", "Keras", "Scikit-learn"],
+      "Procesamiento de Lenguaje": ["NLP", "HuggingFace", "BERT", "GPT"],
+      "Computer Vision": ["OpenCV", "TensorFlow Vision"],
+      Plataformas: ["Azure ML", "Google AI", "OpenAI"],
+      Lenguajes: ["Python", "R", "Julia"],
+    },
   },
   {
     icon: "mdi-cellphone",
     title: "Desarrollo de Aplicaciones Móviles",
     description:
       "Creamos aplicaciones nativas y multiplataforma que brindan experiencias excepcionales a tus usuarios en cualquier dispositivo.",
-    technologies: [
-      "React Native",
-      "Flutter",
-      "Kotlin",
-      "Swift",
-      "PWA",
-      "Android",
-      "iOS",
-    ],
+    techCategories: {
+      Frameworks: ["React Native", "Flutter", "MAUI"],
+      Plataformas: ["Android", "iOS"],
+      Lenguajes: ["Swift", "Kotlin", "JavaScript", "C#"],
+      Herramientas: ["Android Studio", "Xcode"],
+      "UI/UX": ["Material Design", "iOS Design Guidelines"],
+    },
   },
   {
     icon: "mdi-chart-bar",
     title: "Data Analytics",
     description:
       "Transformamos tus datos en insights accionables mediante análisis avanzados, visualizaciones y dashboards interactivos.",
-    technologies: [
-      "Power BI",
-      "Tableau",
-      "Python",
-      "R",
-      "SQL",
-      "Hadoop",
-      "Spark",
-      "Big Data",
-    ],
+    techCategories: {
+      "Plataformas BI": ["Power BI", "Tableau", "Looker Studio"],
+      Lenguajes: ["Python", "R", "SQL"],
+      "Bases de Datos": ["SQL Server", "PostgreSQL", "MongoDB", "BigQuery"],
+      "Big Data": ["Hadoop", "Spark"],
+      ETL: ["SSIS/SSDT", "Pentaho", "Informatica"],
+    },
   },
   {
     icon: "mdi-school",
     title: "Capacitación",
     description:
       "Desarrollamos programas de formación personalizados para que tu equipo domine las tecnologías implementadas y maximice su potencial.",
-    technologies: [
-      "E-learning",
-      "Mentoring",
-      "Workshops",
-      "Bootcamps",
-      "Certificaciones",
-      "LMS",
-    ],
+    techCategories: {
+      "Plataformas E-learning": ["Moodle", "Canvas", "LMS"],
+      Metodologías: ["Mentoring", "Workshops", "Bootcamps"],
+      Certificaciones: ["Microsoft", "AWS", "Google Cloud", "ITIL", "Scrum"],
+      "Áreas de Formación": [
+        "Desarrollo",
+        "Cloud",
+        "DevOps",
+        "Data Science",
+        "IA",
+      ],
+    },
   },
   {
     icon: "mdi-refresh",
     title: "Servicio Continuo",
     description:
       "Proporcionamos mantenimiento, actualizaciones y soporte permanente para garantizar que tus soluciones tecnológicas evolucionen con tu negocio.",
-    technologies: [
-      "DevOps",
-      "CI/CD",
-      "GitLab",
-      "GitHub",
-      "Jenkins",
-      "SLAs",
-      "Monitoreo",
-    ],
+    techCategories: {
+      DevOps: ["CI/CD", "Jenkins", "Azure DevOps", "GitHub Actions"],
+      Versionamiento: ["GitLab", "GitHub", "Bitbucket"],
+      Monitoreo: ["Prometheus", "Grafana", "ELK Stack"],
+      SLAs: ["Gestión de Incidentes", "Respaldo de Datos", "Actualizaciones"],
+      Testing: ["Selenium", "Playwright", "JUnit", "NUnit"],
+    },
   },
   {
     icon: "mdi-lightbulb",
     title: "Asesoría Tecnológica",
     description:
       "Ofrecemos consultoría estratégica para alinear tus iniciativas tecnológicas con tus objetivos de negocio, maximizando el retorno de inversión.",
-    technologies: [
-      "Roadmap Digital",
-      "Transformación Digital",
-      "Enterprise Architecture",
-      "TOGAF",
-      "ITIL",
-    ],
+    techCategories: {
+      "Transformación Digital": ["Roadmap Digital", "Estrategia Tecnológica"],
+      Metodologías: ["Enterprise Architecture", "TOGAF", "ITIL"],
+      Innovación: ["IA", "Blockchain", "Cloud", "IoT"],
+      Seguridad: ["Ciberseguridad", "Cumplimiento Normativo", "GDPR"],
+    },
   },
   {
-    icon: "mdi-alert-decagram",
-    title: "Automatización de Procesos",
+    icon: "mdi-memory",
+    title: "Blockchain y Tecnologías Emergentes",
     description:
-      "Implementamos tecnologías RPA (Robotic Process Automation) y flujos de trabajo inteligentes para reducir costes y eliminar errores en procesos repetitivos.",
-    technologies: [
-      "UiPath",
-      "Automation Anywhere",
-      "Blue Prism",
-      "Microsoft Power Automate",
-      "WorkFusion",
-    ],
+      "Implementamos soluciones basadas en tecnologías emergentes como Blockchain para crear sistemas seguros, transparentes y descentralizados.",
+    techCategories: {
+      Blockchain: ["Blockchain", "Blockcerts", "Ethereum", "Hyperledger"],
+      "Smart Contracts": ["Solidity", "Chaincode"],
+      Infraestructura: ["Nodos Blockchain", "Redes Privadas"],
+      Seguridad: ["Criptografía", "Tokenización", "Identidad Digital"],
+    },
   },
 ];
 </script>
@@ -356,12 +397,25 @@ const services = [
   background-color: var(--neutral-light);
 }
 
-.primary-gradient {
-  background: var(--gradient-primary);
+/* Nuevos gradientes para iconos */
+.blue-purple-gradient {
+  background: linear-gradient(135deg, #2979ff, #5e35b1);
 }
 
-.tertiary-gradient {
-  background: var(--gradient-tertiary);
+.purple-pink-gradient {
+  background: linear-gradient(135deg, #673ab7, #e91e63);
+}
+
+.blue-teal-gradient {
+  background: linear-gradient(135deg, #1976d2, #00897b);
+}
+
+.purple-blue-gradient {
+  background: linear-gradient(135deg, #7b1fa2, #1565c0);
+}
+
+.indigo-blue-gradient {
+  background: linear-gradient(135deg, #3949ab, #0288d1);
 }
 
 .service-logo-container:hover {
@@ -394,6 +448,15 @@ const services = [
   background-color: var(--background-paper);
   border-radius: 20px;
   overflow: hidden;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+}
+
+.service-header {
+  background-color: #fff;
+  border-bottom: 1px solid rgba(200, 210, 255, 0.1);
 }
 
 .service-dialog-title {
@@ -404,7 +467,7 @@ const services = [
 }
 
 .service-avatar {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
 
 .service-description {
@@ -413,14 +476,74 @@ const services = [
   font-size: 1.1rem;
 }
 
-.technologies-section {
-  background-color: var(--neutral-light);
-  padding: 16px;
+/* Nuevos estilos mejorados para la sección de tecnologías */
+.dialog-content {
+  padding-bottom: 0;
+  overflow: visible;
+  max-height: none;
+}
+
+.technologies-container {
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 8px 20px rgba(26, 35, 126, 0.2);
+}
+
+.technologies-body {
+  background: linear-gradient(135deg, #3949ab, #3f51b5, #5c6bc0, #3f51b5);
+  padding: 20px;
+  max-height: 50vh;
+  overflow-y: auto;
   border-radius: 12px;
 }
 
-.tech-chip {
+.technologies-title {
   color: white !important;
+  font-weight: 600;
+}
+
+.tech-categories-wrapper {
+  margin-top: 10px;
+}
+
+/* Estilos para categorías de tecnologías */
+.tech-category {
+  margin-bottom: 20px;
+}
+
+.tech-category:last-child {
+  margin-bottom: 0;
+}
+
+.tech-category-name {
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  margin-bottom: 10px;
+}
+
+.tech-chip {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+  color: white !important;
+  font-weight: 500;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  margin: 4px;
+}
+
+.tech-chip:hover {
+  background-color: rgba(255, 255, 255, 0.25) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+  margin-bottom: 8px;
   font-weight: 500;
 }
 
@@ -430,13 +553,13 @@ const services = [
     font-size: 1.5rem !important;
   }
 
-  .dialog-content {
-    padding: 16px;
-  }
-
   .service-avatar {
     margin-bottom: 16px;
     margin-right: 0 !important;
+  }
+
+  .technologies-body {
+    max-height: 60vh;
   }
 }
 </style>

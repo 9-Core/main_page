@@ -189,7 +189,6 @@ provide("changePage", changePage);
 const menuItems = [
   { title: "Inicio", page: "INICIO" },
   { title: "Servicios", page: "SERVICIOS" },
-  { title: "Proyectos", page: "PROYECTOS" },
   { title: "Nosotros", page: "NOSOTROS" },
 ];
 
@@ -436,5 +435,14 @@ onUnmounted(() => {
 .dark-section {
   background-color: var(--background-dark) !important;
   color: var(--neutral-light) !important;
+}
+
+.gradient-btn {
+  background: var(--gradient-full);
+  color: white !important;
+  letter-spacing: 1px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(61, 90, 241, 0.25);
 }
 </style>

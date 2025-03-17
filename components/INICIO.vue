@@ -367,6 +367,14 @@ export default {
     min-width: 8ch;
   }
 
+  .typing-text {
+    min-width: 8ch;
+  }
+
+  .typing-text {
+    min-width: 8ch;
+  }
+
   .hero-tagline {
     font-size: 1.1rem !important;
     padding: 0 16px;

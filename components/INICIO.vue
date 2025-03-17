@@ -170,6 +170,7 @@ export default {
 .hero-minimal {
   position: relative;
   background-color: var(--neutral-darkest);
+  /* background: linear-gradient(135deg, #131525 0%, #2A3DAD 100%); */
   overflow: hidden;
   z-index: 1;
 }

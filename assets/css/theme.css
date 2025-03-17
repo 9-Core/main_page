@@ -61,9 +61,9 @@
   );
   --gradient-full: linear-gradient(
     135deg,
-    var(--primary-main),
-    var(--secondary-main),
-    var(--tertiary-main)
+    #3d5af1,
+    #7b42f6,
+    #22caac
   );
   --gradient-mati: linear-gradient(
     135deg,

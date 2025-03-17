@@ -7,7 +7,7 @@
       <v-row class="mb-16">
         <v-col cols="12" class="text-center">
           <span class="overline text-gradient d-block mb-2">QUIÉNES SOMOS</span>
-          <h2 class="text-h3 mb-4 font-weight-black white-text">Sobre Nosotros</h2>
+          <h2 class="text-h3 mb-4"><span class="text-gradient">Sobre Nosotros</span></h2>
           <v-divider class="mx-auto custom-divider mb-8" width="100" thickness="4"></v-divider>
           <p class="text-subtitle-1 section-subtitle mx-auto" style="max-width: 700px">
             Un equipo apasionado por transformar el futuro digital
@@ -174,9 +174,9 @@ const milestones = [
 <style scoped>
 /* Estilos para la sección de Sobre Nosotros */
 .about-section {
-  background-color: var(--neutral-darkest);
+  background-color: #f8f9fa;
   position: relative;
-  color: var(--text-light);
+  color: #343a40;
   overflow: hidden;
 }
 
@@ -212,13 +212,11 @@ const milestones = [
 
 /* Estilos para el contenido principal */
 .main-heading {
-  color: var(--text-light);
   font-weight: 700;
   line-height: 1.2;
 }
 
 .main-text {
-  color: var(--text-muted);
   line-height: 1.7;
   font-size: 1.1rem;
 }
@@ -233,7 +231,7 @@ const milestones = [
   border-radius: 16px;
   padding: 24px 16px;
   text-align: center;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(31, 25, 25, 0.473);
   transition: all 0.3s ease;
   height: 100%;
 }
@@ -256,7 +254,6 @@ const milestones = [
 }
 
 .stat-label {
-  color: var(--text-muted);
   font-size: 1rem;
   font-weight: 500;
 }
@@ -295,7 +292,6 @@ const milestones = [
 }
 
 .card-text {
-  color: var(--text-muted);
   line-height: 1.7;
   font-size: 1rem;
 }

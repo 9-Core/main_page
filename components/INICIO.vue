@@ -2,7 +2,7 @@
 <template>
   <v-container fluid class="hero-minimal pa-0">
     <div class="animated-bg"></div>
-    
+
     <v-row class="align-center justify-center ma-0" style="min-height: 100vh">
       <v-col cols="12" md="10" lg="8" class="text-center">
         <div class="logo-animation mb-8">
@@ -15,13 +15,14 @@
         </div>
 
         <h1 class="text-h1 font-weight-black mb-6 glow-text">
-          
-          <span class="core-text">C{{ displayText }}<span class="blink-cursor">|</span></span>
-          
+          <span class="core-text"
+            >C{{ displayText }}<span class="blink-cursor">|</span></span
+          >
         </h1>
 
         <p class="text-h5 mb-12 hero-tagline slide-up-fade">
-          Transformamos ideas en <span class="highlight-text">realidad digital</span>
+          Transformamos ideas en
+          <span class="highlight-text">realidad digital</span>
         </p>
 
         <div class="button-group slide-up-fade">
@@ -35,7 +36,7 @@
             CONÓCENOS
             <v-icon end>mdi-arrow-right</v-icon>
           </v-btn>
-          
+          <!---
           <v-btn
             size="x-large"
             variant="outlined"
@@ -45,18 +46,20 @@
           >
             SERVICIOS
           </v-btn>
+          -->
         </div>
-        
+        <!---
         <div class="scroll-indicator mt-16">
           <v-icon class="scroll-icon pulse">mdi-chevron-down</v-icon>
         </div>
+        -->
       </v-col>
     </v-row>
   </v-container>
 </template>
 
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, onMounted, onBeforeUnmount } from "vue";
 
 const words = [
   "ore",
@@ -125,14 +128,31 @@ onBeforeUnmount(() => {
 });
 </script>
 
-
 <script>
 export default {
   data() {
     return {
-      words: ['CORE', 'COMPROMISO', 'CONTROL', 'CREATIVIDAD', 'CONFIANZA', 'COMUNIDAD', 'CONEXIÓN', 'CLOUD', 'CAPACITACIÓN', 'COMUNICACIÓN', 'CULTURA', 'CIBERSEGURIDAD', 'CLOUD', 'CÓDIGO', 'CONECTIVIDAD', 'CUMPLIMIENTO', 'COSTOS'],
-      currentWord: '', // Palabra completa
-      displayedWord: '', // Parte mostrada
+      words: [
+        "CORE",
+        "COMPROMISO",
+        "CONTROL",
+        "CREATIVIDAD",
+        "CONFIANZA",
+        "COMUNIDAD",
+        "CONEXIÓN",
+        "CLOUD",
+        "CAPACITACIÓN",
+        "COMUNICACIÓN",
+        "CULTURA",
+        "CIBERSEGURIDAD",
+        "CLOUD",
+        "CÓDIGO",
+        "CONECTIVIDAD",
+        "CUMPLIMIENTO",
+        "COSTOS",
+      ],
+      currentWord: "", // Palabra completa
+      displayedWord: "", // Parte mostrada
       wordIndex: 0,
       typingSpeed: 150, // Velocidad de tipeo (en milisegundos)
       deletingSpeed: 75, // Velocidad de borrado
@@ -160,7 +180,7 @@ export default {
       this.typeWord(); // Inicia el tipeo de la siguiente palabra
     },
     delay(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
+      return new Promise((resolve) => setTimeout(resolve, ms));
     },
   },
 };
@@ -181,8 +201,11 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background: 
-    radial-gradient(circle at 20% 30%, rgba(79, 70, 229, 0.15), transparent 70%),
+  background: radial-gradient(
+      circle at 20% 30%,
+      rgba(79, 70, 229, 0.15),
+      transparent 70%
+    ),
     radial-gradient(circle at 80% 70%, rgba(16, 185, 129, 0.1), transparent 70%);
   z-index: -1;
   animation: pulse-bg 10s infinite alternate;
@@ -206,8 +229,13 @@ export default {
 }
 
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 .hero-logo {
@@ -216,7 +244,7 @@ export default {
 }
 
 .logo-9 {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   letter-spacing: 0.1em;
   font-weight: 900;
   color: var(--primary-main);
@@ -224,7 +252,7 @@ export default {
 }
 
 .core-text {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   letter-spacing: 0.1em;
   font-weight: 900;
   color: var(--neutral-light);
@@ -240,8 +268,13 @@ export default {
 }
 
 @keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
 }
 
 .hero-tagline {
@@ -275,13 +308,18 @@ export default {
 }
 
 .gradient-btn::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.3) 50%, rgba(255,255,255,0) 100%);
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
   transform: translateX(-100%);
   transition: transform 0.6s;
 }
@@ -380,14 +418,15 @@ export default {
     font-size: 1.1rem !important;
     padding: 0 16px;
   }
-  
+
   .button-group {
     display: flex;
     flex-direction: column;
     gap: 16px;
   }
-  
-  .gradient-btn, .outline-btn {
+
+  .gradient-btn,
+  .outline-btn {
     width: 100%;
     margin: 8px 0;
   }

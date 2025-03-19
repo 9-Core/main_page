@@ -18,13 +18,13 @@
           <h3 class="text-h3 mb-6 main-heading font-weight-black">
             ¿Hablamos de tu <span class="text-gradient">Proyecto</span>?
           </h3>
-          
+
           <p class="text-body-1 mb-5">
-            Estamos listos para ayudarte a convertir tus ideas en
-            soluciones tecnológicas innovadoras. Contáctanos y
-            descubre cómo podemos impulsar tu negocio.
+            Estamos listos para ayudarte a convertir tus ideas en soluciones
+            tecnológicas innovadoras. Contáctanos y descubre cómo podemos
+            impulsar tu negocio.
           </p>
-          
+
           <!-- Información de contacto -->
           <div class="mt-8">
             <!-- Email -->
@@ -37,7 +37,7 @@
                 <div class="contact-value">info@tudominio.com</div>
               </div>
             </div>
-            
+
             <!-- Teléfono -->
             <div class="contact-item mb-6 d-flex align-center">
               <div class="contact-icon-wrapper secondary-bg">
@@ -48,11 +48,13 @@
                 <div class="contact-value">+1 (555) 123-4567</div>
               </div>
             </div>
-            
+
             <!-- Ubicación -->
             <div class="contact-item mb-6 d-flex align-center">
               <div class="contact-icon-wrapper tertiary-bg">
-                <v-icon size="22" color="tertiary">mdi-map-marker-outline</v-icon>
+                <v-icon size="22" color="tertiary"
+                  >mdi-map-marker-outline</v-icon
+                >
               </div>
               <div class="ms-4">
                 <div class="contact-label">Visítanos</div>
@@ -60,18 +62,20 @@
               </div>
             </div>
           </div>
-          
+
           <!-- Redes sociales -->
           <div class="mt-10">
-            <h4 class="text-h6 mb-4">Síguenos en</h4>
-            <div class="d-flex gap-3">
+            <h4 class="text-subtitle-1 font-weight-bold mb-3">Síguenos en</h4>
+            <div class="d-flex">
               <v-btn
                 v-for="(social, i) in socialLinks"
                 :key="i"
                 :href="social.url"
                 icon
                 variant="outlined"
-                class="social-btn"
+                size="large"
+                class="social-btn me-2"
+                :class="i % 2 === 0 ? 'primary-text' : 'secondary-text'"
               >
                 <v-icon>{{ social.icon }}</v-icon>
               </v-btn>
@@ -85,13 +89,19 @@
             <v-card-item>
               <div class="pa-4">
                 <div class="d-flex align-center mb-6">
-                  <v-icon size="28" color="primary" class="me-3">mdi-message-text</v-icon>
+                  <v-icon size="28" color="primary" class="me-3"
+                    >mdi-message-text</v-icon
+                  >
                   <h3 class="text-h5 font-weight-bold primary-text">
                     Envíanos un mensaje
                   </h3>
                 </div>
-                
-                <v-form ref="formRef" v-model="valid" @submit.prevent="submitForm">
+
+                <v-form
+                  ref="formRef"
+                  v-model="valid"
+                  @submit.prevent="submitForm"
+                >
                   <v-row>
                     <v-col cols="12" md="6">
                       <v-text-field
@@ -164,16 +174,10 @@
       </v-row>
     </v-container>
 
-    <v-snackbar
-      v-model="snackbar.show"
-      :color="snackbar.color"
-      :timeout="3000"
-    >
+    <v-snackbar v-model="snackbar.show" :color="snackbar.color" :timeout="3000">
       {{ snackbar.text }}
       <template v-slot:actions>
-        <v-btn variant="text" @click="snackbar.show = false">
-          Cerrar
-        </v-btn>
+        <v-btn variant="text" @click="snackbar.show = false"> Cerrar </v-btn>
       </template>
     </v-snackbar>
   </v-container>
@@ -189,7 +193,7 @@ const formData = ref({
   email: "",
   service: "",
   message: "",
-  phone: ""
+  phone: "",
 });
 
 const formRef = ref(null);
@@ -217,7 +221,8 @@ const messageRules = [
 
 const phoneRules = [
   (v) => !!v || "El número de teléfono es obligatorio",
-  (v) => /^[0-9]+$/.test(v) || "El número de teléfono debe contener solo dígitos",
+  (v) =>
+    /^[0-9]+$/.test(v) || "El número de teléfono debe contener solo dígitos",
   (v) => v.length >= 9 || "El número de teléfono debe tener al menos 9 dígitos",
 ];
 
@@ -234,7 +239,7 @@ const socialLinks = [
   { icon: "mdi-facebook", url: "#" },
   { icon: "mdi-linkedin", url: "#" },
   { icon: "mdi-instagram", url: "#" },
-  { icon: "mdi-twitter", url: "#" },
+  //{ icon: "mdi-twitter", url: "#" },
 ];
 
 const submitForm = async () => {
@@ -247,9 +252,15 @@ const submitForm = async () => {
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 5px;">
         <h2 style="color: #4361ee;">Nuevo mensaje desde el formulario de contacto</h2>
         <p><strong>Nombre:</strong> ${formData.value.name}</p>
-        <p><strong>Email:</strong> <a href="mailto:${formData.value.email}">${formData.value.email}</a></p>
+        <p><strong>Email:</strong> <a href="mailto:${formData.value.email}">${
+      formData.value.email
+    }</a></p>
         <p><strong>Teléfono:</strong> ${formData.value.phone}</p>
-        ${formData.value.service ? `<p><strong>Servicio de interés:</strong> ${formData.value.service}</p>` : ""}
+        ${
+          formData.value.service
+            ? `<p><strong>Servicio de interés:</strong> ${formData.value.service}</p>`
+            : ""
+        }
         <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 15px;">
           <h3 style="margin-top: 0; color: #3a86ff;">Mensaje:</h3>
           <p style="white-space: pre-line;">${formData.value.message}</p>
@@ -262,7 +273,9 @@ const submitForm = async () => {
       method: "POST",
       body: {
         to: "info@tudominio.com",
-        subject: `Formulario de contacto - ${formData.value.service || "Consulta general"}`,
+        subject: `Formulario de contacto - ${
+          formData.value.service || "Consulta general"
+        }`,
         text: `Mensaje de ${formData.value.name} (${formData.value.email}): ${formData.value.message}`,
         html: htmlContent,
         from: `Sitio Web 9Core <noreply@9core.com>`,
@@ -273,7 +286,7 @@ const submitForm = async () => {
     if (error.value) {
       throw new Error(error.value.message || "Error al enviar el mensaje");
     }
-    
+
     snackbar.value = {
       show: true,
       text: "¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.",
@@ -284,7 +297,6 @@ const submitForm = async () => {
     setTimeout(() => {
       formRef.value.resetValidation();
     }, 0);
-    
   } catch (error) {
     console.error("Error al enviar el mensaje:", error);
     snackbar.value = {
@@ -371,12 +383,19 @@ const submitForm = async () => {
 }
 
 .social-btn {
-  transition: all 0.3s ease;
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  margin-right: 8px;
+  width: 42px;
+  height: 42px;
 }
 
 .social-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  transform: translateY(-5px);
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .contact-form-card {
@@ -391,9 +410,12 @@ const submitForm = async () => {
 }
 
 .primary-text {
-  color: #4361ee;
+  color: var(--primary-main) !important;
 }
 
+.secondary-text {
+  color: var(--secondary-main) !important;
+}
 .gradient-btn {
   background: linear-gradient(to right, #4361ee, #3a86ff);
   color: white;
@@ -412,7 +434,7 @@ const submitForm = async () => {
   .contact-form-card {
     margin-top: 2rem;
   }
-  
+
   .main-heading {
     font-size: 1.8rem !important;
   }
@@ -423,24 +445,21 @@ const submitForm = async () => {
     width: 38px;
     height: 38px;
   }
-  
+
   .contact-value {
     font-size: 1rem;
   }
-  
+
   .social-btn {
     margin-right: 8px;
   }
-  
+
   .gradient-btn {
     font-size: 0.95rem;
   }
-  
+
   .custom-divider {
     width: 80px;
   }
 }
-
-
-
 </style>

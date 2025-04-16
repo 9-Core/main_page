@@ -10,27 +10,54 @@
       </v-col>
     </v-row>
 
-    <!-- Grid de servicios (logos y nombres) -->
+    <!-- Grid de servicios con descripción breve -->
     <v-row class="service-grid px-2">
       <v-col
         v-for="(service, i) in services"
         :key="i"
-        cols="6"
-        sm="4"
-        md="3"
-        lg="2"
+        cols="12"
+        sm="6"
+        md="4"
+        lg="3"
         class="mb-6"
       >
-        <div class="service-logo-container" @click="openServiceDialog(i)">
-          <div class="service-inner">
-            <v-icon
-              :icon="service.icon"
-              size="42"
-              class="service-icon mb-3 primary-text"
-            ></v-icon>
-            <div class="service-name">{{ getShortTitle(service.title) }}</div>
-          </div>
-        </div>
+        <v-hover v-slot="{ isHovering, props }">
+          <v-card
+            v-bind="props"
+            :elevation="isHovering ? 4 : 1"
+            class="service-card h-100"
+            @click="openServiceDialog(i)"
+          >
+            <v-card-item class="text-center pt-6">
+              <div class="d-flex flex-column align-center">
+                <div
+                  :class="getIconGradientClass(i)"
+                  class="service-icon-wrapper mb-4"
+                >
+                  <v-icon :icon="service.icon" size="32" color="white"></v-icon>
+                </div>
+                <h3 class="text-subtitle-1 font-weight-bold service-name mb-2">
+                  {{ getShortTitle(service.title) }}
+                </h3>
+                <p class="text-caption service-short-desc px-2">
+                  {{ service.shortDescription }}
+                </p>
+              </div>
+            </v-card-item>
+            <v-card-actions class="d-flex justify-center pb-4">
+              <v-btn
+                size="small"
+                variant="outlined"
+                color="primary"
+                class="rounded-pill text-none"
+                density="comfortable"
+              >
+                Ver más
+                <v-icon end icon="mdi-arrow-right" size="small"></v-icon>
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-hover>
       </v-col>
     </v-row>
 
@@ -154,6 +181,8 @@ const services = [
   {
     icon: "mdi-cog-refresh",
     title: "Automatización y Optimización de Procesos",
+    shortDescription:
+      "Mejora la eficiencia operativa mediante la automatización de flujos de trabajo clave.",
     description:
       "Mejoramos la eficiencia operativa mediante la automatización de flujos de trabajo y optimización de procesos empresariales clave.",
     techCategories: {
@@ -172,6 +201,8 @@ const services = [
   {
     icon: "mdi-code-braces",
     title: "Desarrollo de Sistemas y Software",
+    shortDescription:
+      "Creamos sistemas y aplicaciones personalizadas con tecnologías modernas e innovadoras.",
     description:
       "Creamos sistemas y aplicaciones personalizadas utilizando tecnologías modernas e innovadoras que se adaptan a tus necesidades específicas.",
     techCategories: {
@@ -204,6 +235,8 @@ const services = [
   {
     icon: "mdi-account-group",
     title: "Outsourcing",
+    shortDescription:
+      "Servicios de externalización de TI que te permiten enfocarte en tu negocio principal.",
     description:
       "Proporcionamos servicios de externalización de TI de alta calidad, permitiéndote enfocarte en tu negocio principal mientras gestionamos tu infraestructura tecnológica.",
     techCategories: {
@@ -221,6 +254,8 @@ const services = [
   {
     icon: "mdi-cloud",
     title: "Cloud Solutions",
+    shortDescription:
+      "Infraestructuras cloud escalables, seguras y rentables para optimizar tus operaciones.",
     description:
       "Implementamos y gestionamos infraestructuras cloud escalables, seguras y rentables para optimizar tus operaciones digitales.",
     techCategories: {
@@ -238,6 +273,8 @@ const services = [
   {
     icon: "mdi-cogs",
     title: "Servicios TI",
+    shortDescription:
+      "Servicios completos de tecnología, desde soporte técnico hasta planificación estratégica.",
     description:
       "Ofrecemos una gama completa de servicios de tecnología de la información, desde soporte técnico hasta planificación estratégica.",
     techCategories: {
@@ -251,6 +288,8 @@ const services = [
   {
     icon: "mdi-robot",
     title: "Soluciones con IA",
+    shortDescription:
+      "Integramos inteligencia artificial para mejorar procesos y descubrir nuevas oportunidades.",
     description:
       "Integramos inteligencia artificial en tus procesos para mejorar la toma de decisiones, automatizar tareas repetitivas y descubrir nuevas oportunidades.",
     techCategories: {
@@ -264,6 +303,8 @@ const services = [
   {
     icon: "mdi-cellphone",
     title: "Desarrollo de Aplicaciones Móviles",
+    shortDescription:
+      "Apps nativas y multiplataforma con experiencias excepcionales en cualquier dispositivo.",
     description:
       "Creamos aplicaciones nativas y multiplataforma que brindan experiencias excepcionales a tus usuarios en cualquier dispositivo.",
     techCategories: {
@@ -277,6 +318,8 @@ const services = [
   {
     icon: "mdi-chart-bar",
     title: "Data Analytics",
+    shortDescription:
+      "Transformamos datos en insights accionables mediante análisis y visualizaciones avanzadas.",
     description:
       "Transformamos tus datos en insights accionables mediante análisis avanzados, visualizaciones y dashboards interactivos.",
     techCategories: {
@@ -290,6 +333,8 @@ const services = [
   {
     icon: "mdi-school",
     title: "Capacitación",
+    shortDescription:
+      "Programas de formación personalizados para potenciar las habilidades de tu equipo.",
     description:
       "Desarrollamos programas de formación personalizados para que tu equipo domine las tecnologías implementadas y maximice su potencial.",
     techCategories: {
@@ -308,6 +353,8 @@ const services = [
   {
     icon: "mdi-refresh",
     title: "Servicio Continuo",
+    shortDescription:
+      "Mantenimiento, actualizaciones y soporte permanente para tus soluciones tecnológicas.",
     description:
       "Proporcionamos mantenimiento, actualizaciones y soporte permanente para garantizar que tus soluciones tecnológicas evolucionen con tu negocio.",
     techCategories: {
@@ -321,6 +368,8 @@ const services = [
   {
     icon: "mdi-lightbulb",
     title: "Asesoría Tecnológica",
+    shortDescription:
+      "Consultoría estratégica para alinear tus iniciativas tecnológicas con objetivos de negocio.",
     description:
       "Ofrecemos consultoría estratégica para alinear tus iniciativas tecnológicas con tus objetivos de negocio, maximizando el retorno de inversión.",
     techCategories: {
@@ -333,6 +382,8 @@ const services = [
   {
     icon: "mdi-memory",
     title: "Blockchain y Tecnologías Emergentes",
+    shortDescription:
+      "Soluciones basadas en tecnologías emergentes para sistemas seguros y transparentes.",
     description:
       "Implementamos soluciones basadas en tecnologías emergentes como Blockchain para crear sistemas seguros, transparentes y descentralizados.",
     techCategories: {
@@ -366,7 +417,60 @@ const services = [
   opacity: 0.9;
 }
 
-/* Estilos para las tarjetas de iconos */
+/* Nuevos estilos para las tarjetas de servicio */
+.service-card {
+  background-color: var(--background-paper);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  border: 1px solid rgba(42, 61, 173, 0.05);
+  box-shadow: 0 6px 15px rgba(42, 61, 173, 0.05);
+  cursor: pointer;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.service-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 25px rgba(42, 61, 173, 0.08);
+}
+
+.service-icon-wrapper {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  transition: all 0.3s ease;
+}
+
+.service-card:hover .service-icon-wrapper {
+  transform: scale(1.1);
+}
+
+.service-name {
+  color: var(--neutral-darkest);
+  line-height: 1.3;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.service-short-desc {
+  color: var(--neutral-medium);
+  text-align: center;
+  margin-bottom: 16px;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height: 54px; /* Altura fija para 3 líneas aproximadamente */
+}
+
+/* Antiguos estilos de logoContainer que podemos conservar para el modal */
 .service-logo-container {
   aspect-ratio: 1/1;
   border-radius: 16px;
@@ -416,31 +520,6 @@ const services = [
 
 .indigo-blue-gradient {
   background: linear-gradient(135deg, #3949ab, #0288d1);
-}
-
-.service-logo-container:hover {
-  transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 15px 30px rgba(42, 61, 173, 0.1);
-}
-
-.service-icon {
-  color: var(--primary-main) !important;
-  filter: drop-shadow(0 2px 4px rgba(42, 61, 173, 0.1));
-  transition: all 0.4s ease;
-}
-
-.service-logo-container:hover .service-icon {
-  transform: scale(1.15);
-}
-
-.service-name {
-  margin-top: 8px;
-  color: var(--neutral-darkest);
-  font-weight: 600;
-  font-size: 0.9rem;
-  text-align: center;
-  line-height: 1.2;
-  transition: all 0.3s ease;
 }
 
 /* Estilos para el dialog */

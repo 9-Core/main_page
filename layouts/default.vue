@@ -3,16 +3,15 @@
   <v-app>
     <!-- Navbar con efecto de transparente a sólido al scroll -->
     <v-app-bar
-  :elevation="isScrolled ? 4 : 0"
-  :style="{
-    backgroundColor: isScrolled
-      ? 'rgba(19, 21, 37, 0.9)'
-      : 'var(--neutra2-light-background)',
-    transition: 'background-color 0.3s ease-in-out'
-  }"
-  fixed
->
-
+      :elevation="isScrolled ? 4 : 0"
+      :style="{
+        backgroundColor: isScrolled
+          ? 'rgba(19, 21, 37, 0.9)'
+          : 'var(--neutra2-light-background)',
+        transition: 'background-color 0.3s ease-in-out',
+      }"
+      fixed
+    >
       <v-container class="d-flex align-center px-6">
         <!-- Logo con icono de desarrollo -->
         <div class="d-flex align-center">
@@ -25,13 +24,24 @@
 
         <!-- Menú Desktop -->
         <div class="d-none d-md-flex align-center">
-          <v-btn v-for="(item, i) in menuItems" :key="i" :class="{ 'nav-active': currentPage === item.page }"
-            variant="text" class="mx-2 nav-link nav-text" @click="changePage(item.page)">
+          <v-btn
+            v-for="(item, i) in menuItems"
+            :key="i"
+            :class="{ 'nav-active': currentPage === item.page }"
+            variant="text"
+            class="mx-2 nav-link nav-text"
+            @click="changePage(item.page)"
+          >
             <span>{{ item.title }}</span>
           </v-btn>
 
           <!-- Botón de contacto -->
-          <v-btn class="ml-4 primary-btn white-text" rounded="xl" elevation="2" @click="changePage('CONTACTO')">
+          <v-btn
+            class="ml-4 primary-btn white-text"
+            rounded="xl"
+            elevation="2"
+            @click="changePage('CONTACTO')"
+          >
             <v-icon start>mdi-email</v-icon>
             Contactar
           </v-btn>
@@ -42,34 +52,53 @@
           <v-icon>{{ drawer ? "mdi-close" : "mdi-menu" }}</v-icon>
         </v-btn>
       </v-container>
-
     </v-app-bar>
 
     <!-- Menú móvil -->
-    <v-navigation-drawer v-model="drawer" temporary location="right" class="drawer-bg pa-4">
+    <v-navigation-drawer
+      v-model="drawer"
+      temporary
+      location="right"
+      class="drawer-bg pa-4"
+    >
       <div class="text-center mb-6">
-        <v-img src="/image.png" alt="Logo" max-width="60" class="mx-auto mb-4"></v-img>
-        <div class="text-h6 font-weight-bold core-logo-text">9 Core</div>
+        <v-img
+          src="/image.png"
+          alt="Logo"
+          max-width="60"
+          class="mx-auto mb-4"
+        ></v-img>
+        <div class="text-h6 font-weight-bold core-logo-text">9Core</div>
       </div>
 
       <v-divider class="mb-4 divider"></v-divider>
 
       <v-list class="transparent-list">
-        <v-list-item v-for="(item, i) in menuItems" :key="i" :active="currentPage === item.page" rounded="lg"
-          class="mb-2" @click="
+        <v-list-item
+          v-for="(item, i) in menuItems"
+          :key="i"
+          :active="currentPage === item.page"
+          rounded="lg"
+          class="mb-2"
+          @click="
             changePage(item.page);
-          drawer = false;
-          ">
+            drawer = false;
+          "
+        >
           <v-list-item-title class="font-weight-medium nav-text">
             {{ item.title }}
           </v-list-item-title>
         </v-list-item>
 
         <v-list-item class="mt-4">
-          <v-btn block class="primary-btn mt-2 white-text" @click="
-            changePage('CONTACTO');
-          drawer = false;
-          ">
+          <v-btn
+            block
+            class="primary-btn mt-2 white-text"
+            @click="
+              changePage('CONTACTO');
+              drawer = false;
+            "
+          >
             <v-icon start>mdi-email</v-icon>
             Contactar
           </v-btn>
@@ -78,7 +107,14 @@
 
       <!-- Social links en menú móvil -->
       <div class="d-flex justify-center gap-2 mt-8">
-        <v-btn v-for="(social, i) in socialLinks" :key="i" :href="social.url" icon variant="text" class="social-btn">
+        <v-btn
+          v-for="(social, i) in socialLinks"
+          :key="i"
+          :href="social.url"
+          icon
+          variant="text"
+          class="social-btn"
+        >
           <v-icon>{{ social.icon }}</v-icon>
         </v-btn>
       </div>
@@ -96,16 +132,27 @@
           <!-- Información de la empresa -->
           <v-col cols="12" md="4" class="white-text">
             <div class="d-flex align-center mb-4">
-              <v-img src="/image.png" alt="Logo" max-width="40" class="me-3"></v-img>
-              <h3 class="text-h6 font-weight-bold core-logo-text">9 Core</h3>
+              <v-img
+                src="/image.png"
+                alt="Logo"
+                max-width="40"
+                class="me-3"
+              ></v-img>
+              <h3 class="text-h6 font-weight-bold core-logo-text">9Core</h3>
             </div>
             <p class="text-body-2 mb-4">
               Transformando negocios a través de soluciones tecnológicas
               innovadoras
             </p>
             <div class="d-flex gap-2">
-              <v-btn v-for="(social, i) in socialLinks" :key="i" :href="social.url" icon variant="text"
-                class="social-btn">
+              <v-btn
+                v-for="(social, i) in socialLinks"
+                :key="i"
+                :href="social.url"
+                icon
+                variant="text"
+                class="social-btn"
+              >
                 <v-icon>{{ social.icon }}</v-icon>
               </v-btn>
             </div>
@@ -117,8 +164,13 @@
               Links Rápidos
             </h3>
             <v-list class="footer-list">
-              <v-list-item v-for="(item, i) in menuItems" :key="i" class="pa-0 mb-2" @click="changePage(item.page)"
-                style="cursor: pointer">
+              <v-list-item
+                v-for="(item, i) in menuItems"
+                :key="i"
+                class="pa-0 mb-2"
+                @click="changePage(item.page)"
+                style="cursor: pointer"
+              >
                 <v-list-item-title class="white-text">
                   {{ item.title }}
                 </v-list-item-title>
@@ -132,11 +184,11 @@
             </h3>
             <div class="d-flex align-center mb-3">
               <v-icon class="me-2 primary-text">mdi-map-marker</v-icon>
-              <span class="white-text">123 Calle Principal, Ciudad</span>
+              <span class="white-text">Santiago, Chile</span>
             </div>
             <div class="d-flex align-center mb-3">
               <v-icon class="me-2 secondary-text">mdi-phone</v-icon>
-              <span class="white-text">+1 234 567 890</span>
+              <span class="white-text">+56990829776</span>
             </div>
             <div class="d-flex align-center">
               <v-icon class="me-2 tertiary-text">mdi-email</v-icon>
@@ -148,8 +200,7 @@
         <!-- Copyright -->
         <v-divider class="my-4 divider"></v-divider>
         <div class="text-center white-text">
-          © {{ new Date().getFullYear() }} 9 Core. Todos los derechos
-          reservados.
+          © {{ new Date().getFullYear() }} 9Core. Todos los derechos reservados.
         </div>
       </v-container>
     </v-footer>
@@ -265,19 +316,27 @@ onUnmounted(() => {
   --text-muted: rgba(255, 255, 255, 0.7);
 
   /* Gradientes */
-  --gradient-primary: linear-gradient(135deg,
-      var(--primary-light),
-      var(--primary-dark));
-  --gradient-secondary: linear-gradient(135deg,
-      var(--secondary-light),
-      var(--secondary-dark));
-  --gradient-tertiary: linear-gradient(135deg,
-      var(--tertiary-light),
-      var(--tertiary-dark));
-  --gradient-full: linear-gradient(135deg,
-      var(--primary-main),
-      var(--secondary-main),
-      var(--tertiary-main));
+  --gradient-primary: linear-gradient(
+    135deg,
+    var(--primary-light),
+    var(--primary-dark)
+  );
+  --gradient-secondary: linear-gradient(
+    135deg,
+    var(--secondary-light),
+    var(--secondary-dark)
+  );
+  --gradient-tertiary: linear-gradient(
+    135deg,
+    var(--tertiary-light),
+    var(--tertiary-dark)
+  );
+  --gradient-full: linear-gradient(
+    135deg,
+    var(--primary-main),
+    var(--secondary-main),
+    var(--tertiary-main)
+  );
 }
 
 /* Estilos específicos para el layout */
@@ -290,7 +349,7 @@ onUnmounted(() => {
 }
 
 .core-text-navbar {
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   letter-spacing: 0.1em;
   font-weight: 900;
   font-size: 30px;
@@ -307,7 +366,6 @@ onUnmounted(() => {
 }
 
 @keyframes blink {
-
   0%,
   100% {
     opacity: 1;
@@ -317,7 +375,6 @@ onUnmounted(() => {
     opacity: 0;
   }
 }
-
 
 .primary-text {
   color: var(--primary-main) !important;

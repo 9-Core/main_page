@@ -1,17 +1,6 @@
 <template>
   <v-container fluid class="contact-section py-16">
     <v-container>
-      <!-- <v-row class="mb-12">
-        <v-col cols="12" class="text-center">
-          <span class="overline text-gradient d-block mb-2">CONTÁCTANOS</span>
-          <h2 class="text-h3 mb-4 font-weight-black"><span class="text-gradient">Contacto</span></h2>
-          <v-divider class="mx-auto custom-divider mb-8" width="100" thickness="4"></v-divider>
-          <p class="text-subtitle-1 section-subtitle mx-auto" style="max-width: 700px">
-            Estamos listos para impulsar tu próximo proyecto
-          </p>
-        </v-col>
-      </v-row> -->
-
       <v-row class="d-flex justify-center">
         <!-- Información de contacto - Izquierda -->
         <v-col cols="12" md="6" class="pe-md-6">
@@ -34,7 +23,7 @@
               </div>
               <div class="ms-4">
                 <div class="contact-label">Envíanos un correo</div>
-                <div class="contact-value">info@tudominio.com</div>
+                <div class="contact-value">contacto@9core.cl</div>
               </div>
             </div>
 
@@ -45,7 +34,7 @@
               </div>
               <div class="ms-4">
                 <div class="contact-label">Llámanos</div>
-                <div class="contact-value">+1 (555) 123-4567</div>
+                <div class="contact-value">+56990829776</div>
               </div>
             </div>
 
@@ -247,39 +236,20 @@ const submitForm = async () => {
   loading.value = true;
 
   try {
-    // Crear el contenido HTML del correo
-    const htmlContent = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 5px;">
-        <h2 style="color: #4361ee;">Nuevo mensaje desde el formulario de contacto</h2>
-        <p><strong>Nombre:</strong> ${formData.value.name}</p>
-        <p><strong>Email:</strong> <a href="mailto:${formData.value.email}">${
-      formData.value.email
-    }</a></p>
-        <p><strong>Teléfono:</strong> ${formData.value.phone}</p>
-        ${
-          formData.value.service
-            ? `<p><strong>Servicio de interés:</strong> ${formData.value.service}</p>`
-            : ""
-        }
-        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin-top: 15px;">
-          <h3 style="margin-top: 0; color: #3a86ff;">Mensaje:</h3>
-          <p style="white-space: pre-line;">${formData.value.message}</p>
-        </div>
-      </div>
-    `;
-
-    // Enviar solicitud a la API
-    const { data, error } = await useFetch("/api/mail/send", {
+    // Enviar solicitud a la API con los datos del formulario
+    const { data, error } = await useFetch("/api/send", {
       method: "POST",
       body: {
-        to: "info@tudominio.com",
-        subject: `Formulario de contacto - ${
-          formData.value.service || "Consulta general"
-        }`,
-        text: `Mensaje de ${formData.value.name} (${formData.value.email}): ${formData.value.message}`,
-        html: htmlContent,
-        from: `Sitio Web 9Core <noreply@9core.com>`,
-        replyTo: formData.value.email,
+        // Datos del formulario
+        name: formData.value.name,
+        email: formData.value.email,
+        phone: formData.value.phone,
+        service: formData.value.service,
+        message: formData.value.message,
+
+        // Configuración adicional
+        to: "info@tudominio.com", // Email de la empresa (reemplazar con el correo real)
+        from: "Sitio Web 9Core <jamenesesrojas@gmail.com>",
       },
     });
 
@@ -287,18 +257,26 @@ const submitForm = async () => {
       throw new Error(error.value.message || "Error al enviar el mensaje");
     }
 
+    if (!data.value.success) {
+      throw new Error(data.value.statusMessage || "Error al enviar el mensaje");
+    }
+
+    // Mostrar mensaje de éxito
     snackbar.value = {
       show: true,
-      text: "¡Mensaje enviado con éxito! Nos pondremos en contacto pronto.",
+      text: "¡Mensaje enviado con éxito! Te hemos enviado una confirmación por correo electrónico.",
       color: "success",
     };
 
+    // Resetear el formulario
     formRef.value.reset();
     setTimeout(() => {
       formRef.value.resetValidation();
     }, 0);
   } catch (error) {
     console.error("Error al enviar el mensaje:", error);
+
+    // Mostrar mensaje de error
     snackbar.value = {
       show: true,
       text: "Hubo un problema al enviar el mensaje. Por favor, inténtalo de nuevo.",

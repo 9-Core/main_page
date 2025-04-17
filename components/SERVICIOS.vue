@@ -287,7 +287,7 @@ const services = [
   },
   {
     icon: "mdi-robot",
-    title: "Soluciones con IA",
+    title: "Soluciones IA",
     shortDescription:
       "Integramos inteligencia artificial para mejorar procesos y descubrir nuevas oportunidades.",
     description:

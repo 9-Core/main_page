@@ -3,17 +3,17 @@ import nodemailer from "nodemailer";
 
 // Configuración del servidor SMTP con tus credenciales
 const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 587,
-  secure: false,
+  host: "smtpout.secureserver.net", // Servidor SMTP de GoDaddy
+  port: 465, // Puerto para conexión segura
+  secure: true, // true para 465
   auth: {
-    user: "jamenesesrojas@gmail.com",
-    pass: "silh glde gyei kima",
+    user: "joaquin.meneses@9core.cl", // tu correo de GoDaddy
+    pass: "joaco9core", // tu contraseña del correo
   },
 });
 
 // Función para crear el template HTML para la empresa
-const createCompanyEmailTemplate = (formData: FormData) => {
+const createCompanyEmailTemplate = (formData) => {
   return `
     <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); border-left: 5px solid #4361ee;">
       <div style="text-align: center; padding-bottom: 20px; border-bottom: 1px solid #eaeaea; margin-bottom: 20px;">
@@ -56,15 +56,7 @@ const createCompanyEmailTemplate = (formData: FormData) => {
 };
 
 // Función para crear el template HTML para el cliente
-interface FormData {
-  name: string;
-  email: string;
-  phone: string;
-  service?: string;
-  message: string;
-}
-
-const createClientEmailTemplate = (formData: FormData) => {
+const createClientEmailTemplate = (formData) => {
   return `
     <div style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); border-top: 5px solid #3a86ff;">
       <div style="text-align: center; margin-bottom: 30px;">
@@ -159,25 +151,40 @@ export default defineEventHandler(async (event) => {
     // 1. Enviar email a la empresa
     const companyEmailHtml = createCompanyEmailTemplate(formData);
 
-    await transporter.sendMail({
-      from: '"Sitio Web 9Core" <jamenesesrojas@gmail.com>',
-      to: to || "info@tudominio.com", // Email de la empresa
-      subject: `Nuevo contacto: ${formData.name} - ${
-        formData.service || "Consulta general"
-      }`,
-      html: companyEmailHtml,
-      replyTo: clientEmail,
-    });
+    try {
+      const infoCompany = await transporter.sendMail({
+        from: '"Sitio Web 9Core" <no-reply@9core.cl>', // Cambiado para evitar bucles de correo
+        to: "joaquin.meneses@9core.cl", // Email de la empresa
+        subject: `Nuevo contacto: ${formData.name} - ${
+          formData.service || "Consulta general"
+        }`,
+        html: companyEmailHtml,
+        replyTo: clientEmail,
+        headers: {
+          "X-Priority": "1",
+          "X-MSMail-Priority": "High",
+          Importance: "high",
+          "X-Contact-Form": "true",
+        },
+      });
+
+      console.log("Correo a la empresa enviado con ID:", infoCompany.messageId);
+    } catch (error) {
+      console.error("Error al enviar el correo a la empresa:", error);
+      // Continuamos con el envío al cliente aunque falle el envío a la empresa
+    }
 
     // 2. Enviar email de confirmación al cliente
     const clientEmailHtml = createClientEmailTemplate(formData);
 
-    await transporter.sendMail({
-      from: '"9Core" <jamenesesrojas@gmail.com>',
+    const infoClient = await transporter.sendMail({
+      from: '"9Core" <no-reply@9core.cl>',
       to: clientEmail,
       subject: "Hemos recibido tu mensaje - 9Core",
       html: clientEmailHtml,
     });
+
+    console.log("Correo al cliente enviado con ID:", infoClient.messageId);
 
     // Devolvemos respuesta exitosa
     return {

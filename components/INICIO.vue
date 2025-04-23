@@ -7,7 +7,7 @@
       <v-col cols="12" md="10" lg="8" class="text-center">
         <div class="logo-animation mb-8">
           <v-img
-            src="/logo.png"
+            src="/Icono_Principal_PNG.png"
             max-width="330"
             class="mx-auto hero-logo"
             alt="9-CORE Logo"

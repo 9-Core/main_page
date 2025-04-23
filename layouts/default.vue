@@ -14,11 +14,14 @@
     >
       <v-container class="d-flex align-center px-6">
         <!-- Logo con icono de desarrollo -->
-        <div class="d-flex align-center">
-          <!-- <v-icon class="mr-2">mdi-code-tags</v-icon> -->
-          <span class="blink-cursor-navbar"> >&nbsp;</span>
-          <span class="core-text-navbar">9CORE</span>
-        </div>
+        <v-img
+          @click="changePage('INICIO')"
+          src="/Logo_principal_PNG.png"
+          alt="9CORE Logo"
+          max-height="180"
+          contain
+          class="logo-image"
+        ></v-img>
 
         <v-spacer></v-spacer>
 
@@ -63,12 +66,12 @@
     >
       <div class="text-center mb-6">
         <v-img
-          src="/image.png"
+          src="/Icono_Principal_PNG.png"
           alt="Logo"
           max-width="60"
           class="mx-auto mb-4"
         ></v-img>
-        <div class="text-h6 font-weight-bold core-logo-text">9Core</div>
+        <div class="text-h6 font-weight-bold core-logo-text">Core</div>
       </div>
 
       <v-divider class="mb-4 divider"></v-divider>
@@ -133,12 +136,12 @@
           <v-col cols="12" md="4" class="white-text">
             <div class="d-flex align-center mb-4">
               <v-img
-                src="/image.png"
+                src="/Icono_Principal_PNG.png"
                 alt="Logo"
                 max-width="40"
                 class="me-3"
               ></v-img>
-              <h3 class="text-h6 font-weight-bold core-logo-text">9Core</h3>
+              <h3 class="text-h6 font-weight-bold core-logo-text">Core</h3>
             </div>
             <p class="text-body-2 mb-4">
               Transformando negocios a través de soluciones tecnológicas

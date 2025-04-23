@@ -18,8 +18,8 @@
           <div class="mt-8">
             <!-- Email -->
             <div class="contact-item mb-6 d-flex align-center">
-              <div class="contact-icon-wrapper primary-bg">
-                <v-icon size="22" color="primary">mdi-email-outline</v-icon>
+              <div class="contact-icon-wrapper email-bg">
+                <v-icon size="22" color="white">mdi-email-outline</v-icon>
               </div>
               <div class="ms-4">
                 <div class="contact-label">Envíanos un correo</div>
@@ -29,8 +29,8 @@
 
             <!-- Teléfono -->
             <div class="contact-item mb-6 d-flex align-center">
-              <div class="contact-icon-wrapper secondary-bg">
-                <v-icon size="22" color="secondary">mdi-phone-outline</v-icon>
+              <div class="contact-icon-wrapper phone-bg">
+                <v-icon size="22" color="white">mdi-phone-outline</v-icon>
               </div>
               <div class="ms-4">
                 <div class="contact-label">Llámanos</div>
@@ -40,10 +40,8 @@
 
             <!-- Ubicación -->
             <div class="contact-item mb-6 d-flex align-center">
-              <div class="contact-icon-wrapper tertiary-bg">
-                <v-icon size="22" color="tertiary"
-                  >mdi-map-marker-outline</v-icon
-                >
+              <div class="contact-icon-wrapper location-bg">
+                <v-icon size="22" color="white">mdi-map-marker-outline</v-icon>
               </div>
               <div class="ms-4">
                 <div class="contact-label">Visítanos</div>
@@ -64,7 +62,7 @@
                 variant="outlined"
                 size="large"
                 class="social-btn me-2"
-                :class="i % 2 === 0 ? 'primary-text' : 'secondary-text'"
+                :class="socialButtonClass(i)"
               >
                 <v-icon>{{ social.icon }}</v-icon>
               </v-btn>
@@ -98,6 +96,8 @@
                         label="Nombre"
                         :rules="nameRules"
                         variant="outlined"
+                        placeholder="Ej: Juan Pérez"
+                        hint="Tu nombre completo"
                         required
                       ></v-text-field>
                     </v-col>
@@ -108,6 +108,8 @@
                         label="Email"
                         :rules="emailRules"
                         variant="outlined"
+                        placeholder="Ej: tu@email.com"
+                        hint="Correo electrónico de contacto"
                         required
                       ></v-text-field>
                     </v-col>
@@ -118,6 +120,10 @@
                         label="Teléfono"
                         :rules="phoneRules"
                         variant="outlined"
+                        placeholder="Ej: +56912345678"
+                        hint="Formato: +56 9 seguido de 8 dígitos"
+                        type="tel"
+                        @input="formatPhoneNumber"
                         required
                       ></v-text-field>
                     </v-col>
@@ -128,6 +134,7 @@
                         :items="serviceOptions"
                         label="Servicio de interés"
                         variant="outlined"
+                        hint="Selecciona el servicio que te interesa"
                       ></v-select>
                     </v-col>
 
@@ -138,6 +145,8 @@
                         :rules="messageRules"
                         variant="outlined"
                         rows="4"
+                        placeholder="Escribe aquí los detalles de tu consulta..."
+                        hint="Mínimo 10 caracteres"
                         required
                       ></v-textarea>
                     </v-col>
@@ -193,26 +202,60 @@ const snackbar = ref({
   color: "",
 });
 
+// Reglas de validación mejoradas
 const nameRules = [
   (v) => !!v || "El nombre es obligatorio",
   (v) => v.length >= 3 || "El nombre debe tener al menos 3 caracteres",
+  (v) =>
+    /^[A-Za-záéíóúüñÁÉÍÓÚÜÑ\s]+$/.test(v) ||
+    "El nombre solo debe contener letras y espacios",
 ];
 
+// Validación de email mejorada
 const emailRules = [
   (v) => !!v || "El email es obligatorio",
-  (v) => /.+@.+\..+/.test(v) || "El email debe ser válido",
+  (v) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || "El formato del email no es válido",
+  (v) => /\.[a-z]{2,}$/i.test(v) || "El dominio del email no es válido",
 ];
+
+// Validación específica para número de teléfono chileno
+const phoneRules = [
+  (v) => !!v || "El número de teléfono es obligatorio",
+  (v) =>
+    /^\+56[9]\d{8}$/.test(v) ||
+    "Debe ser un número chileno válido: +569 seguido de 8 dígitos",
+];
+
+// Función para formatear automáticamente el número de teléfono
+const formatPhoneNumber = (event) => {
+  // Eliminar cualquier carácter que no sea número, excepto el signo +
+  const cleaned = formData.value.phone.replace(/[^\d+]/g, "");
+
+  // Si el usuario elimina todo, no aplicar formato
+  if (cleaned === "") {
+    formData.value.phone = "";
+    return;
+  }
+
+  // Asegurar que comience con +56
+  if (!cleaned.startsWith("+")) {
+    formData.value.phone = "+" + cleaned;
+  } else if (
+    cleaned.startsWith("+") &&
+    !cleaned.startsWith("+56") &&
+    cleaned.length > 1
+  ) {
+    formData.value.phone = "+56" + cleaned.substring(1);
+  } else {
+    formData.value.phone = cleaned;
+  }
+};
 
 const messageRules = [
   (v) => !!v || "El mensaje es obligatorio",
   (v) => v.length >= 10 || "El mensaje debe tener al menos 10 caracteres",
-];
-
-const phoneRules = [
-  (v) => !!v || "El número de teléfono es obligatorio",
-  (v) =>
-    /^[0-9]+$/.test(v) || "El número de teléfono debe contener solo dígitos",
-  (v) => v.length >= 9 || "El número de teléfono debe tener al menos 9 dígitos",
+  (v) => v.length <= 500 || "El mensaje no debe exceder los 500 caracteres",
 ];
 
 const serviceOptions = [
@@ -231,6 +274,17 @@ const socialLinks = [
   //{ icon: "mdi-twitter", url: "#" },
 ];
 
+// Función para determinar la clase de color de cada botón social
+const socialButtonClass = (index) => {
+  const classes = [
+    "facebook-color",
+    "linkedin-color",
+    "instagram-color",
+    "twitter-color",
+  ];
+  return classes[index % classes.length];
+};
+
 const submitForm = async () => {
   if (!valid.value) return;
   loading.value = true;
@@ -244,12 +298,15 @@ const submitForm = async () => {
         name: formData.value.name,
         email: formData.value.email,
         phone: formData.value.phone,
-        service: formData.value.service,
+        service: formData.value.service || "No especificado",
         message: formData.value.message,
 
         // Configuración adicional
-        to: "info@tudominio.com", // Email de la empresa (reemplazar con el correo real)
-        from: "Sitio Web 9Core <jamenesesrojas@gmail.com>",
+        to: "contacto@9core.cl", // Email de la empresa
+        from: "Sitio Web 9Core <no-reply@9core.cl>",
+        subject: `Nuevo contacto: ${formData.value.name} - ${
+          formData.value.service || "Consulta general"
+        }`,
       },
     });
 
@@ -264,7 +321,7 @@ const submitForm = async () => {
     // Mostrar mensaje de éxito
     snackbar.value = {
       show: true,
-      text: "¡Mensaje enviado con éxito! Te hemos enviado una confirmación por correo electrónico.",
+      text: "¡Mensaje enviado con éxito! Te contactaremos pronto.",
       color: "success",
     };
 
@@ -323,21 +380,44 @@ const submitForm = async () => {
   justify-content: center;
   border-radius: 10px;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 
-.primary-bg {
-  border: 1px solid rgba(67, 97, 238, 0.2);
-  background-color: rgba(67, 97, 238, 0.05);
+/* Nuevos colores para los iconos */
+.email-bg {
+  background: linear-gradient(135deg, #4361ee, #3a86ff);
+  border: none;
 }
 
-.secondary-bg {
-  border: 1px solid rgba(58, 134, 255, 0.2);
-  background-color: rgba(58, 134, 255, 0.05);
+.phone-bg {
+  background: linear-gradient(135deg, #3a0ca3, #7209b7);
+  border: none;
 }
 
-.tertiary-bg {
-  border: 1px solid rgba(76, 201, 240, 0.2);
-  background-color: rgba(76, 201, 240, 0.05);
+.location-bg {
+  background: linear-gradient(135deg, #f72585, #b5179e);
+  border: none;
+}
+
+/* Colores para redes sociales */
+.facebook-color {
+  color: #1877f2 !important;
+  border-color: #1877f2 !important;
+}
+
+.linkedin-color {
+  color: #0a66c2 !important;
+  border-color: #0a66c2 !important;
+}
+
+.instagram-color {
+  color: #e4405f !important;
+  border-color: #e4405f !important;
+}
+
+.twitter-color {
+  color: #1da1f2 !important;
+  border-color: #1da1f2 !important;
 }
 
 .contact-label {
@@ -360,11 +440,15 @@ const submitForm = async () => {
   transform: translateX(5px);
 }
 
+.contact-item:hover .contact-icon-wrapper {
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+  transform: scale(1.05);
+}
+
 .social-btn {
   font-size: 1.5rem;
   transition: transform 0.3s ease;
-  background-color: rgba(255, 255, 255, 0.05) !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  background-color: rgba(255, 255, 255, 0.8) !important;
   margin-right: 8px;
   width: 42px;
   height: 42px;
@@ -372,8 +456,8 @@ const submitForm = async () => {
 
 .social-btn:hover {
   transform: translateY(-5px);
-  background-color: rgba(255, 255, 255, 0.1) !important;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  background-color: white !important;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .contact-form-card {

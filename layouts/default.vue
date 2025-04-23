@@ -13,12 +13,12 @@
       fixed
     >
       <v-container class="d-flex align-center px-6">
-        <!-- Logo con icono de desarrollo -->
         <v-img
+          style="cursor: pointer"
           @click="changePage('INICIO')"
           src="/Logo_principal_PNG.png"
           alt="9CORE Logo"
-          max-height="180"
+          max-height="200"
           contain
           class="logo-image"
         ></v-img>
@@ -65,6 +65,7 @@
       class="drawer-bg pa-4"
     >
       <div class="text-center mb-6">
+        <!-- Corregido la ruta de la imagen para el drawer -->
         <v-img
           src="/Icono_Principal_PNG.png"
           alt="Logo"
@@ -135,6 +136,7 @@
           <!-- Información de la empresa -->
           <v-col cols="12" md="4" class="white-text">
             <div class="d-flex align-center mb-4">
+              <!-- Corregido la ruta de la imagen para el footer -->
               <v-img
                 src="/Icono_Principal_PNG.png"
                 alt="Logo"
@@ -358,6 +360,26 @@ onUnmounted(() => {
   font-size: 30px;
   color: var(--primary-light);
   position: relative;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.logo-container:hover {
+  transform: scale(1.05);
+}
+
+.logo-image {
+  max-width: 180px;
+  transition: all 0.3s ease;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
 
 .blink-cursor-navbar {

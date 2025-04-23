@@ -8,7 +8,7 @@
         <div class="logo-animation mb-8">
           <v-img
             src="/Icono_Principal_PNG.png"
-            max-width="330"
+            max-width="230"
             class="mx-auto hero-logo"
             alt="9-CORE Logo"
           ></v-img>

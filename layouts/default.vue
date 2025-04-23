@@ -197,7 +197,7 @@
             </div>
             <div class="d-flex align-center">
               <v-icon class="me-2 tertiary-text">mdi-email</v-icon>
-              <span class="white-text">contacto@9core.com</span>
+              <span class="white-text">contacto@9core.cl</span>
             </div>
           </v-col>
         </v-row>

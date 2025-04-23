@@ -96,7 +96,7 @@ const createClientEmailTemplate = (formData) => {
       </div>
 
       <div style="margin-bottom: 25px; color: #444; line-height: 1.6;">
-        <p>Si necesitas contactarnos inmediatamente, puedes llamarnos al <strong>+1 (555) 123-4567</strong> o responder directamente a este correo electrónico.</p>
+        <p>Si necesitas contactarnos inmediatamente, puedes llamarnos al <strong>+(56)990829776</strong> o responder directamente a este correo electrónico.</p>
         <p>¡Gracias por tu interés en nuestros servicios!</p>
       </div>
 

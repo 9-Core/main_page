@@ -19,6 +19,16 @@ export default defineNuxtConfig({
   },
 
   app: {
+    head: {
+      link: [
+        // favicon
+        {
+          rel: "icon",
+          type: "image/x-icon",
+          href: "/favicon.ico",
+        },
+      ],
+    },
     pageTransition: { name: "page", mode: "out-in" },
   },
 
